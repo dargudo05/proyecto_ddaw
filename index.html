@@ -1,0 +1,1750 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sound Home — Explora la Música</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --surface: #111111;
+    --surface2: #1a1a1a;
+    --border: #222;
+    --accent: #e8ff47;
+    --accent2: #ff4d6d;
+    --accent3: #47ffe8;
+    --text: #f0f0f0;
+    --muted: #666;
+    --muted2: #999;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 3rem;
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    cursor: pointer;
+  }
+  .nav-logo span { color: var(--text); }
+  .nav-links { display: flex; gap: 2rem; align-items: center; }
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-decoration: none;
+    color: var(--muted2);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-cta {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    background: var(--accent);
+    color: #000;
+    border: none;
+    padding: 0.5rem 1.2rem;
+    cursor: pointer;
+    font-weight: 700;
+    text-transform: uppercase;
+    transition: background 0.2s;
+  }
+  .nav-cta:hover { background: #fff; }
+
+  /* ── TICKER ── */
+  .ticker {
+    overflow: hidden;
+    background: var(--accent);
+    color: #000;
+    padding: 0.5rem 0;
+    white-space: nowrap;
+    margin-top: 70px;
+  }
+  .ticker-inner {
+    display: inline-flex;
+    animation: ticker 25s linear infinite;
+  }
+  .ticker-item {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.95rem;
+    letter-spacing: 0.15em;
+    padding: 0 2rem;
+  }
+  .ticker-dot {
+    display: inline-block;
+    width: 5px; height: 5px;
+    background: #000;
+    border-radius: 50%;
+    vertical-align: middle;
+    margin: 0 0.5rem;
+  }
+  @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 6rem 3rem;
+    position: relative;
+    z-index: 2;
+  }
+  .hero-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .hero-tag::before {
+    content: '';
+    display: inline-block;
+    width: 2rem; height: 1px;
+    background: var(--accent);
+  }
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 8vw, 8rem);
+    line-height: 0.9;
+    letter-spacing: 0.02em;
+    margin-bottom: 2rem;
+  }
+  .hero-title em { font-style: normal; color: var(--accent); display: block; }
+  .hero-desc {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--muted2);
+    max-width: 480px;
+    margin-bottom: 2.5rem;
+  }
+  .hero-actions { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+  .btn-primary {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: var(--accent);
+    color: #000;
+    border: none;
+    padding: 0.9rem 2rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .btn-primary:hover { background: #fff; transform: translateY(-2px); }
+  .btn-ghost {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 0.9rem 2rem;
+    cursor: pointer;
+    background: transparent;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+  .hero-right {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .hero-visual {
+    position: relative;
+    width: 100%; height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .vinyl {
+    width: 380px; height: 380px;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg, #1a1a1a 0%, #2a2a2a 10%, #111 20%, #222 30%, #111 40%, #1a1a1a 50%, #222 60%, #111 70%, #2a2a2a 80%, #1a1a1a 90%, #111 100%);
+    box-shadow: 0 0 60px rgba(232,255,71,0.15), 0 0 120px rgba(232,255,71,0.05);
+    animation: spin 18s linear infinite;
+    position: relative;
+  }
+  .vinyl::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #e8ff47 0%, #b8cc30 100%);
+  }
+  @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  .hero-glow {
+    position: absolute;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(232,255,71,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  /* ── SECTION HEADER ── */
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.8rem;
+    letter-spacing: 0.05em;
+    line-height: 1;
+  }
+  .section-title span { color: var(--accent); }
+  .section-link {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .section-link:hover { color: var(--accent); }
+
+  /* ── EXPLORE ── */
+  .explore { padding: 6rem 3rem; }
+  .explore-tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: 3rem;
+    border: 1px solid var(--border);
+    width: fit-content;
+  }
+  .tab {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.7rem 1.8rem;
+    border: none;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .tab.active { background: var(--accent); color: #000; font-weight: 700; }
+  .tab:not(.active):hover { color: var(--text); }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ── GENRE GRID ── */
+  .genre-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+  .genre-card {
+    background: var(--surface);
+    padding: 2rem 1.5rem;
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+    display: block;
+  }
+  .genre-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--accent);
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+    z-index: 0;
+  }
+  .genre-card:hover::before { transform: translateY(0); }
+  .genre-card:hover .genre-name,
+  .genre-card:hover .genre-sub,
+  .genre-card:hover .genre-count { color: #000; }
+  .genre-card:hover .genre-icon { filter: invert(1); }
+  .genre-card > * { position: relative; z-index: 1; }
+  .genre-icon { font-size: 1.8rem; margin-bottom: 1rem; display: block; transition: filter 0.25s; }
+  .genre-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    letter-spacing: 0.05em;
+    color: var(--text);
+    display: block;
+    margin-bottom: 0.3rem;
+    transition: color 0.25s;
+  }
+  .genre-sub {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    display: block;
+    margin-bottom: 1rem;
+    transition: color 0.25s;
+  }
+  .genre-count {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    transition: color 0.25s;
+  }
+
+  /* ── MOOD GRID ── */
+  .mood-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1rem;
+  }
+  .mood-card {
+    padding: 2rem;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    display: block;
+    transition: border-color 0.25s, transform 0.25s;
+    text-decoration: none;
+  }
+  .mood-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+  .mood-card.mel { background: linear-gradient(135deg, #1a1025 0%, #0d0d1a 100%); }
+  .mood-card.en  { background: linear-gradient(135deg, #1a1000 0%, #0a0a0a 100%); }
+  .mood-card.rel { background: linear-gradient(135deg, #001a1a 0%, #0a0a0a 100%); }
+  .mood-card.ang { background: linear-gradient(135deg, #1a0008 0%, #0a0a0a 100%); }
+  .mood-card.fo  { background: linear-gradient(135deg, #001a10 0%, #0a0a0a 100%); }
+  .mood-card.ro  { background: linear-gradient(135deg, #1a001a 0%, #0a0a0a 100%); }
+  .mood-emoji { font-size: 2.5rem; margin-bottom: 1rem; display: block; }
+  .mood-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 0.05em;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  .mood-desc { font-size: 0.82rem; color: var(--muted2); line-height: 1.5; }
+  .mood-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 1rem;
+  }
+  .mood-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.6rem;
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+  .mood-btn {
+    margin-top: 1rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  /* ── MOOD DETAIL (overlay) ── */
+  .mood-detail-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: var(--bg);
+    overflow-y: auto;
+    padding: 100px 3rem 4rem;
+    animation: fadeIn 0.3s ease;
+  }
+  .mood-detail-overlay.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+  .back-btn {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    background: transparent;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    margin-bottom: 2rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s;
+  }
+  .back-btn:hover { color: var(--accent); border-color: var(--accent); }
+
+  .mood-hero {
+    padding: 2.5rem;
+    border: 1px solid var(--border);
+    margin-bottom: 1px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    align-items: start;
+    position: relative;
+    overflow: hidden;
+  }
+  .mood-hero-bg {
+    position: absolute; inset: 0;
+    opacity: 0.05;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 16rem;
+    line-height: 1;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 1rem;
+    color: var(--accent);
+    overflow: hidden;
+  }
+  .mood-hero-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.8rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .mood-hero-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.5rem;
+    letter-spacing: 0.05em;
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+  .mood-hero-desc {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: var(--muted2);
+    max-width: 560px;
+    margin-bottom: 1.2rem;
+  }
+  .mood-traits { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .mood-trait {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.8rem;
+    border: 1px solid;
+  }
+  .trait-a { border-color: var(--accent); color: var(--accent); }
+  .trait-b { border-color: var(--accent2); color: var(--accent2); }
+  .trait-c { border-color: var(--accent3); color: var(--accent3); }
+  .mood-stats { display: flex; flex-direction: column; gap: 0.8rem; min-width: 150px; }
+  .stat-box {
+    border: 1px solid var(--border);
+    padding: 0.8rem 1rem;
+    text-align: center;
+    background: rgba(0,0,0,0.4);
+  }
+  .stat-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.7rem;
+    color: var(--accent);
+    line-height: 1;
+    display: block;
+  }
+  .stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: block;
+    margin-top: 0.2rem;
+  }
+
+  /* MOOD BODY GRID */
+  .mood-body {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-top: none;
+  }
+  .mood-section { background: var(--surface); padding: 1.8rem; }
+  .gsec-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.7rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* ALBUMS */
+  .album-list { display: flex; flex-direction: column; gap: 0.9rem; }
+  .album-item {
+    display: flex; gap: 0.8rem; align-items: flex-start;
+    padding-bottom: 0.9rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .album-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .album-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.7rem;
+    color: var(--border);
+    line-height: 1;
+    width: 1.8rem;
+    flex-shrink: 0;
+  }
+  .album-artist { font-family: 'Space Mono', monospace; font-size: 0.62rem; color: var(--accent); display: block; }
+  .album-title { font-size: 0.84rem; font-weight: 500; color: var(--text); display: block; }
+  .album-why { font-size: 0.76rem; color: var(--muted); line-height: 1.4; margin-top: 0.2rem; }
+
+  /* GENRES */
+  .genre-list { display: flex; flex-direction: column; gap: 0.7rem; }
+  .genre-item { border: 1px solid var(--border); padding: 0.8rem 1rem; }
+  .genre-item-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.05em;
+    display: block;
+    margin-bottom: 0.2rem;
+  }
+  .genre-item-desc { font-size: 0.76rem; color: var(--muted); line-height: 1.4; }
+
+  /* ARTISTS */
+  .artist-list { display: flex; flex-direction: column; gap: 0.7rem; }
+  .artist-item {
+    display: flex; align-items: center; gap: 0.9rem;
+    padding-bottom: 0.7rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .artist-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .artist-avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.75rem;
+    flex-shrink: 0;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--muted2);
+  }
+  .artist-name { font-size: 0.86rem; font-weight: 500; display: block; }
+  .artist-sub { font-family: 'Space Mono', monospace; font-size: 0.62rem; color: var(--muted); }
+
+  /* RELATED MOODS */
+  .related-moods {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-top: none;
+    padding: 1.8rem;
+  }
+  .related-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 0.05em;
+    margin-bottom: 1.2rem;
+  }
+  .related-title span { color: var(--accent); }
+  .related-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 0.8rem;
+  }
+  .related-node {
+    border: 1px solid var(--border);
+    padding: 1rem;
+    cursor: pointer;
+    background: var(--surface);
+    transition: border-color 0.2s;
+    text-align: left;
+    width: 100%;
+  }
+  .related-node:hover { border-color: var(--accent); }
+  .rn-mood {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 0.05em;
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+  .rn-desc { font-size: 0.76rem; color: var(--muted2); line-height: 1.4; margin-bottom: 0.5rem; }
+  .rn-when { font-family: 'Space Mono', monospace; font-size: 0.6rem; color: var(--accent3); }
+
+  /* ── FEATURED GENRE (ROCK) ── */
+  .featured { padding: 0 3rem 6rem; }
+  .genre-page { border: 1px solid var(--border); overflow: hidden; }
+  .genre-hero {
+    background: linear-gradient(135deg, #1a0a00 0%, #0f0f0f 100%);
+    padding: 3rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    align-items: start;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .genre-hero::after {
+    content: 'ROCK';
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18rem;
+    position: absolute;
+    right: -2rem; top: 50%;
+    transform: translateY(-50%);
+    color: rgba(255,255,255,0.02);
+    pointer-events: none;
+    line-height: 1;
+  }
+  .genre-hero-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .genre-hero-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 4rem;
+    letter-spacing: 0.05em;
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+  .genre-hero-desc {
+    font-size: 0.92rem;
+    line-height: 1.7;
+    color: var(--muted2);
+    max-width: 600px;
+    margin-bottom: 1.5rem;
+  }
+  .genre-traits { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .genre-trait {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.8rem;
+    border: 1px solid;
+  }
+  .trait-v { border-color: var(--accent); color: var(--accent); }
+  .trait-e { border-color: var(--accent2); color: var(--accent2); }
+  .trait-r { border-color: var(--accent3); color: var(--accent3); }
+  .genre-stats { display: flex; flex-direction: column; gap: 1rem; min-width: 180px; }
+  .stat-box-lg {
+    border: 1px solid var(--border);
+    padding: 1rem 1.2rem;
+    text-align: center;
+    background: rgba(0,0,0,0.3);
+  }
+  .stat-val-lg {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    color: var(--accent);
+    line-height: 1;
+    display: block;
+  }
+  .stat-label-lg {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: block;
+    margin-top: 0.3rem;
+  }
+
+  .genre-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+    background: var(--border);
+  }
+  .genre-section { background: var(--surface); padding: 2rem; }
+
+  /* instruments */
+  .instrument-list { display: flex; flex-direction: column; gap: 0.8rem; }
+  .instrument-item { display: flex; align-items: center; gap: 1rem; }
+  .instrument-bar { height: 3px; background: var(--accent); border-radius: 0; flex-shrink: 0; }
+  .instrument-name { font-size: 0.85rem; color: var(--text); flex: 1; }
+
+  /* albums (genre dict) */
+  .album-list-lg { display: flex; flex-direction: column; gap: 1rem; }
+  .album-item-lg {
+    display: flex;
+    gap: 1rem; align-items: flex-start;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .album-item-lg:last-child { border-bottom: none; padding-bottom: 0; }
+  .album-num-lg {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    color: var(--border);
+    line-height: 1;
+    width: 2rem;
+    flex-shrink: 0;
+  }
+  .album-artist-lg { font-family: 'Space Mono', monospace; font-size: 0.65rem; color: var(--accent); display: block; }
+  .album-title-lg { font-size: 0.88rem; font-weight: 500; color: var(--text); display: block; }
+  .album-why-lg { font-size: 0.78rem; color: var(--muted); line-height: 1.4; }
+
+  /* RELATION MAP */
+  .relation-map { padding: 2rem; background: var(--surface2); border-top: 1px solid var(--border); }
+  .relation-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 0.05em;
+    margin-bottom: 1.5rem;
+    color: var(--text);
+  }
+  .relation-title span { color: var(--accent); }
+  .relation-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+  .relation-node {
+    border: 1px solid var(--border);
+    padding: 1.2rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    background: var(--surface);
+    text-decoration: none;
+    display: block;
+  }
+  .relation-node:hover { border-color: var(--accent); }
+  .rn-arrow {
+    position: absolute;
+    top: 0.8rem; right: 0.8rem;
+    font-size: 0.8rem;
+    color: var(--muted);
+    transition: color 0.2s, transform 0.2s;
+  }
+  .relation-node:hover .rn-arrow { color: var(--accent); transform: translate(2px,-2px); }
+  .rn-genre {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem;
+    letter-spacing: 0.05em;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  .rn-desc { font-size: 0.78rem; color: var(--muted2); line-height: 1.4; margin-bottom: 0.8rem; }
+  .rn-adds, .rn-loses {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.05em;
+    display: block;
+    line-height: 1.4;
+  }
+  .rn-adds { color: var(--accent3); }
+  .rn-adds::before { content: '+ '; }
+  .rn-loses { color: var(--accent2); }
+  .rn-loses::before { content: '− '; }
+
+  /* ── TESTIMONIALS ── */
+  .testimonials { padding: 6rem 3rem; background: var(--surface); }
+  .testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+  .testimonial-card {
+    background: var(--surface);
+    padding: 2rem;
+    transition: background 0.25s;
+  }
+  .testimonial-card:hover { background: var(--surface2); }
+  .tc-genre {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .tc-genre::before { content: ''; width: 1.5rem; height: 1px; background: var(--accent); display: inline-block; }
+  .tc-text {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: var(--muted2);
+    font-style: italic;
+    margin-bottom: 1.5rem;
+  }
+  .tc-text::before { content: '"'; color: var(--accent); font-size: 2rem; line-height: 0; vertical-align: -0.6rem; margin-right: 0.2rem; font-style: normal; }
+  .tc-user { display: flex; align-items: center; gap: 0.8rem; }
+  .tc-avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 700;
+    background: var(--accent);
+    color: #000;
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 0.05em;
+  }
+  .tc-name { font-size: 0.82rem; font-weight: 500; display: block; }
+  .tc-age { font-family: 'Space Mono', monospace; font-size: 0.62rem; color: var(--muted); display: block; }
+
+  /* ── CONTACT ── */
+  .contact { padding: 6rem 3rem; }
+  .contact-inner {
+    border: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    overflow: hidden;
+  }
+  .contact-left {
+    padding: 3rem;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+  }
+  .contact-right { padding: 3rem; background: var(--surface2); }
+  .contact-heading {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem;
+    letter-spacing: 0.05em;
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+  .contact-heading span { color: var(--accent); }
+  .contact-desc { font-size: 0.9rem; line-height: 1.7; color: var(--muted2); margin-bottom: 2rem; }
+  .contact-email {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--text);
+    text-decoration: none;
+    border: 1px solid var(--border);
+    padding: 0.8rem 1.2rem;
+    transition: all 0.2s;
+  }
+  .contact-email:hover { border-color: var(--accent); color: var(--accent); }
+  .form-field { margin-bottom: 1.2rem; }
+  .form-field label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  .form-field input,
+  .form-field textarea,
+  .form-field select {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.8rem 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    outline: none;
+    transition: border-color 0.2s;
+    appearance: none;
+  }
+  .form-field input:focus,
+  .form-field textarea:focus,
+  .form-field select:focus { border-color: var(--accent); }
+  .form-field textarea { resize: vertical; min-height: 100px; }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--bg);
+  }
+  .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: 0.15em; color: var(--accent); }
+  .footer-logo span { color: var(--muted); }
+  .footer-copy { font-family: 'Space Mono', monospace; font-size: 0.65rem; color: var(--muted); letter-spacing: 0.05em; }
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--accent); }
+
+  /* ── SCROLL ANIMATION ── */
+  .fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .explore, .featured, .testimonials, .contact { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .genre-body { grid-template-columns: 1fr; }
+    .mood-body { grid-template-columns: 1fr; }
+    .mood-hero { grid-template-columns: 1fr; }
+    .mood-stats { flex-direction: row; flex-wrap: wrap; min-width: unset; }
+    .testimonial-grid { grid-template-columns: 1fr; }
+    .contact-inner { grid-template-columns: 1fr; }
+    .contact-left { border-right: none; border-bottom: 1px solid var(--border); }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+    .mood-detail-overlay { padding: 90px 1.5rem 3rem; }
+    .genre-hero { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo" onclick="window.scrollTo({top:0,behavior:'smooth'})">Sound<span>Home</span></div>
+  <div class="nav-links">
+    <a href="#explore">Géneros</a>
+    <a href="#explore" onclick="event.preventDefault();document.getElementById('explore').scrollIntoView({behavior:'smooth'});switchTab('moods',document.querySelectorAll('.tab')[1])">Sentimientos</a>
+    <a href="#featured">Diccionario</a>
+    <a href="#testimonials">Comunidad</a>
+    <a href="#contact">Contacto</a>
+  </div>
+  <button class="nav-cta" onclick="document.getElementById('explore').scrollIntoView({behavior:'smooth'})">Explorar →</button>
+</nav>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="ticker-item">Rock</span><span class="ticker-dot"></span>
+    <span class="ticker-item">Jazz</span><span class="ticker-dot"></span>
+    <span class="ticker-item">Hip-Hop</span><span class="ticker-dot"></span>
+    <span class="ticker-item">Electrónica</span><span class="ticker-dot"></span>
+    <span class="ticker-item">Metal</span><span class="ticker-dot"></span>
+    <span class="ticker-item">R&B</span><span class="ticker-dot"></span>
+    <span class="ticker-item">Clásica</span><span class="ticker-dot"></span>
+    <span class="ticker-item">Indie</span><span class="ticker-dot"></span>
+    <span class="ticker-item">Folk</span><span class="ticker-dot"></span>
+    <span class="ticker-item">Reggaeton</span><span class="ticker-dot"></span>
+    <span class="ticker-item">Soul</span><span class="ticker-dot"></span>
+    <span class="ticker-item">Punk</span><span class="ticker-dot"></span>
+    <span class="ticker-item">Rock</span><span class="ticker-dot"></span>
+    <span class="ticker-item">Jazz</span><span class="ticker-dot"></span>
+    <span class="ticker-item">Hip-Hop</span><span class="ticker-dot"></span>
+    <span class="ticker-item">Electrónica</span><span class="ticker-dot"></span>
+    <span class="ticker-item">Metal</span><span class="ticker-dot"></span>
+    <span class="ticker-item">R&B</span><span class="ticker-dot"></span>
+    <span class="ticker-item">Clásica</span><span class="ticker-dot"></span>
+    <span class="ticker-item">Indie</span><span class="ticker-dot"></span>
+    <span class="ticker-item">Folk</span><span class="ticker-dot"></span>
+    <span class="ticker-item">Reggaeton</span><span class="ticker-dot"></span>
+    <span class="ticker-item">Soul</span><span class="ticker-dot"></span>
+    <span class="ticker-item">Punk</span><span class="ticker-dot"></span>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">Plataforma de Géneros Musicales</div>
+    <h1 class="hero-title">Descubre<br><em>tu sonido</em></h1>
+    <p class="hero-desc">Explora la música desde cómo te sientes hoy. Encuentra géneros, subgéneros y los álbumes esenciales que los definen. Sin abrumarte — un árbol genealógico musical creado para ti.</p>
+    <div class="hero-actions">
+      <a href="#explore" class="btn-primary">Explorar por Género →</a>
+      <button class="btn-ghost" onclick="document.getElementById('explore').scrollIntoView({behavior:'smooth'});setTimeout(()=>switchTab('moods',document.querySelectorAll('.tab')[1]),400)">Por Sentimiento</button>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-visual">
+      <div class="hero-glow"></div>
+      <div class="vinyl"></div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPLORE -->
+<section class="explore" id="explore">
+  <div class="section-header">
+    <h2 class="section-title">Explorar <span>Géneros</span></h2>
+    <a href="#" class="section-link">Ver todos →</a>
+  </div>
+
+  <div class="explore-tabs">
+    <button class="tab active" onclick="switchTab('genres',this)">Por Género</button>
+    <button class="tab" onclick="switchTab('moods',this)">Por Sentimiento</button>
+  </div>
+
+  <!-- GENRES TAB -->
+  <div class="tab-panel active" id="tab-genres">
+    <div class="genre-grid">
+      <a href="#featured" class="genre-card">
+        <span class="genre-icon">🎸</span>
+        <span class="genre-name">Rock</span>
+        <span class="genre-sub">Grunge · Alt · Clásico · Post-rock</span>
+        <span class="genre-count">12 subgéneros</span>
+      </a>
+      <a href="#" class="genre-card">
+        <span class="genre-icon">🎤</span>
+        <span class="genre-name">Hip-Hop</span>
+        <span class="genre-sub">Trap · Boom Bap · Conscious · Cloud</span>
+        <span class="genre-count">9 subgéneros</span>
+      </a>
+      <a href="#" class="genre-card">
+        <span class="genre-icon">🎹</span>
+        <span class="genre-name">Electrónica</span>
+        <span class="genre-sub">House · Techno · Ambient · Drum & Bass</span>
+        <span class="genre-count">15 subgéneros</span>
+      </a>
+      <a href="#" class="genre-card">
+        <span class="genre-icon">🎷</span>
+        <span class="genre-name">Jazz</span>
+        <span class="genre-sub">Bebop · Fusion · Smooth · Neo-soul</span>
+        <span class="genre-count">8 subgéneros</span>
+      </a>
+      <a href="#" class="genre-card">
+        <span class="genre-icon">🤘</span>
+        <span class="genre-name">Metal</span>
+        <span class="genre-sub">Death · Black · Prog · Nu-metal · Doom</span>
+        <span class="genre-count">11 subgéneros</span>
+      </a>
+      <a href="#" class="genre-card">
+        <span class="genre-icon">🎵</span>
+        <span class="genre-name">R&B</span>
+        <span class="genre-sub">Soul · Neo-soul · Contemporary · Funk</span>
+        <span class="genre-count">7 subgéneros</span>
+      </a>
+      <a href="#" class="genre-card">
+        <span class="genre-icon">🌿</span>
+        <span class="genre-name">Folk</span>
+        <span class="genre-sub">Indie folk · Americana · Celtic · Singer-songwriter</span>
+        <span class="genre-count">6 subgéneros</span>
+      </a>
+      <a href="#" class="genre-card">
+        <span class="genre-icon">🎻</span>
+        <span class="genre-name">Clásica</span>
+        <span class="genre-sub">Barroco · Romántico · Contemporáneo · Minimalismo</span>
+        <span class="genre-count">5 subgéneros</span>
+      </a>
+      <a href="#" class="genre-card">
+        <span class="genre-icon">🎶</span>
+        <span class="genre-name">Pop</span>
+        <span class="genre-sub">Synth-pop · Electropop · Art pop · K-pop</span>
+        <span class="genre-count">10 subgéneros</span>
+      </a>
+      <a href="#" class="genre-card">
+        <span class="genre-icon">🌊</span>
+        <span class="genre-name">Reggae</span>
+        <span class="genre-sub">Dancehall · Dub · Reggaeton · Ska</span>
+        <span class="genre-count">5 subgéneros</span>
+      </a>
+      <a href="#" class="genre-card">
+        <span class="genre-icon">⚡</span>
+        <span class="genre-name">Punk</span>
+        <span class="genre-sub">Hardcore · Post-punk · Emo · Pop-punk</span>
+        <span class="genre-count">7 subgéneros</span>
+      </a>
+      <a href="#" class="genre-card" style="background:var(--surface2); display:flex; align-items:center; justify-content:center;">
+        <span style="font-family:'Bebas Neue',sans-serif; font-size:1.1rem; letter-spacing:0.1em; color:var(--muted); text-align:center; position:relative; z-index:1;">Ver todos los géneros →</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- MOODS TAB -->
+  <div class="tab-panel" id="tab-moods">
+    <div class="mood-grid">
+      <div class="mood-card mel" onclick="showMood('melancolia')">
+        <span class="mood-emoji">🌧️</span>
+        <span class="mood-name">Melancolía</span>
+        <p class="mood-desc">Para cuando el peso del mundo se siente demasiado real. Música que abraza la tristeza sin juzgarla.</p>
+        <div class="mood-tags">
+          <span class="mood-tag">Post-rock</span>
+          <span class="mood-tag">Slowcore</span>
+          <span class="mood-tag">Indie folk</span>
+          <span class="mood-tag">Shoegaze</span>
+        </div>
+        <div class="mood-btn">Ver detalle →</div>
+      </div>
+      <div class="mood-card en" onclick="showMood('energetico')">
+        <span class="mood-emoji">⚡</span>
+        <span class="mood-name">Energético</span>
+        <p class="mood-desc">Adrenalina pura. Música que te hace mover el cuerpo sin que puedas evitarlo.</p>
+        <div class="mood-tags">
+          <span class="mood-tag">Punk</span>
+          <span class="mood-tag">Drum & Bass</span>
+          <span class="mood-tag">Metal</span>
+          <span class="mood-tag">Trap</span>
+        </div>
+        <div class="mood-btn">Ver detalle →</div>
+      </div>
+      <div class="mood-card rel" onclick="showMood('relajado')">
+        <span class="mood-emoji">🌊</span>
+        <span class="mood-name">Relajado</span>
+        <p class="mood-desc">Música que fluye sin exigirte nada. Perfecta para leer, estudiar o simplemente existir.</p>
+        <div class="mood-tags">
+          <span class="mood-tag">Ambient</span>
+          <span class="mood-tag">Jazz suave</span>
+          <span class="mood-tag">Bossa Nova</span>
+          <span class="mood-tag">Neo-soul</span>
+        </div>
+        <div class="mood-btn">Ver detalle →</div>
+      </div>
+      <div class="mood-card ang" onclick="showMood('angustia')">
+        <span class="mood-emoji">🔥</span>
+        <span class="mood-name">Angustia</span>
+        <p class="mood-desc">Cuando la tensión interna no tiene salida fácil. Sonidos que canalizan lo que no se puede decir.</p>
+        <div class="mood-tags">
+          <span class="mood-tag">Post-punk</span>
+          <span class="mood-tag">Industrial</span>
+          <span class="mood-tag">Black Metal</span>
+          <span class="mood-tag">Noise rock</span>
+        </div>
+        <div class="mood-btn">Ver detalle →</div>
+      </div>
+      <div class="mood-card fo" onclick="showMood('enfocado')">
+        <span class="mood-emoji">🎯</span>
+        <span class="mood-name">Enfocado</span>
+        <p class="mood-desc">Para entrar en modo deep work. Sin distracciones, solo flujo mental y productividad.</p>
+        <div class="mood-tags">
+          <span class="mood-tag">Minimalismo</span>
+          <span class="mood-tag">Lo-fi</span>
+          <span class="mood-tag">Ambient</span>
+          <span class="mood-tag">Post-bop</span>
+        </div>
+        <div class="mood-btn">Ver detalle →</div>
+      </div>
+      <div class="mood-card ro" onclick="showMood('romantico')">
+        <span class="mood-emoji">💜</span>
+        <span class="mood-name">Romántico</span>
+        <p class="mood-desc">Música que habla del amor en todos sus colores: su euforia, su ternura y su pérdida.</p>
+        <div class="mood-tags">
+          <span class="mood-tag">R&B</span>
+          <span class="mood-tag">Dream pop</span>
+          <span class="mood-tag">Soul</span>
+          <span class="mood-tag">Bolero</span>
+        </div>
+        <div class="mood-btn">Ver detalle →</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED GENRE PAGE: ROCK -->
+<section class="featured fade-up" id="featured">
+  <div class="section-header">
+    <h2 class="section-title">Diccionario <span>de Géneros</span></h2>
+    <a href="#" class="section-link">Ver todos →</a>
+  </div>
+  <div class="genre-page">
+    <div class="genre-hero">
+      <div>
+        <div class="genre-hero-label">🎸 Género Principal</div>
+        <h3 class="genre-hero-name">Rock</h3>
+        <p class="genre-hero-desc">Nacido del blues y el country en los años 50, el rock es un género que construyó su identidad sobre la guitarra eléctrica, la actitud rebelde y la energía en vivo. Desde la inocencia del rock and roll de Chuck Berry hasta las texturas abstractas del post-rock, abarca décadas de evolución sin perder su esencia: la electricidad.</p>
+        <div class="genre-traits">
+          <span class="genre-trait trait-v">🎸 Guitarra eléctrica</span>
+          <span class="genre-trait trait-e">🥁 Ritmo poderoso</span>
+          <span class="genre-trait trait-r">⚡ Actitud rebelde</span>
+        </div>
+      </div>
+      <div class="genre-stats">
+        <div class="stat-box-lg"><span class="stat-val-lg">12</span><span class="stat-label-lg">Subgéneros</span></div>
+        <div class="stat-box-lg"><span class="stat-val-lg">1950</span><span class="stat-label-lg">Origen</span></div>
+        <div class="stat-box-lg"><span class="stat-val-lg">★ 4.8</span><span class="stat-label-lg">Valoración</span></div>
+      </div>
+    </div>
+    <div class="genre-body">
+      <div class="genre-section">
+        <div class="gsec-label">⚙️ Instrumentación Clave</div>
+        <div class="instrument-list">
+          <div class="instrument-item"><div class="instrument-bar" style="width:90px"></div><span class="instrument-name">Guitarra Eléctrica</span></div>
+          <div class="instrument-item"><div class="instrument-bar" style="width:70px; background:var(--accent2);"></div><span class="instrument-name">Batería</span></div>
+          <div class="instrument-item"><div class="instrument-bar" style="width:60px; background:var(--accent3);"></div><span class="instrument-name">Bajo Eléctrico</span></div>
+          <div class="instrument-item"><div class="instrument-bar" style="width:50px;"></div><span class="instrument-name">Voz Principal</span></div>
+          <div class="instrument-item"><div class="instrument-bar" style="width:35px; background:var(--muted);"></div><span class="instrument-name">Teclados</span></div>
+        </div>
+        <p style="font-size:0.8rem; color:var(--muted); margin-top:1.5rem; line-height:1.5;">Suele atraer a personas que valoran la autenticidad, la expresión sin filtros y la energía colectiva. Introvertidos creativos y extrovertidos apasionados por igual.</p>
+      </div>
+      <div class="genre-section">
+        <div class="gsec-label">💿 Los 5 Esenciales</div>
+        <div class="album-list-lg">
+          <div class="album-item-lg">
+            <span class="album-num-lg">01</span>
+            <div><span class="album-artist-lg">Led Zeppelin</span><span class="album-title-lg">Led Zeppelin IV (1971)</span><span class="album-why-lg">La columna vertebral del hard rock. Define el riff como lenguaje universal.</span></div>
+          </div>
+          <div class="album-item-lg">
+            <span class="album-num-lg">02</span>
+            <div><span class="album-artist-lg">Nirvana</span><span class="album-title-lg">Nevermind (1991)</span><span class="album-why-lg">El momento en que el grunge cambió la cultura pop para siempre.</span></div>
+          </div>
+          <div class="album-item-lg">
+            <span class="album-num-lg">03</span>
+            <div><span class="album-artist-lg">The Beatles</span><span class="album-title-lg">Abbey Road (1969)</span><span class="album-why-lg">La cima compositiva del pop-rock. Melodía y experimentación en equilibrio.</span></div>
+          </div>
+          <div class="album-item-lg">
+            <span class="album-num-lg">04</span>
+            <div><span class="album-artist-lg">Pink Floyd</span><span class="album-title-lg">The Dark Side of the Moon (1973)</span><span class="album-why-lg">El álbum donde el rock se convirtió en experiencia cinematográfica.</span></div>
+          </div>
+          <div class="album-item-lg">
+            <span class="album-num-lg">05</span>
+            <div><span class="album-artist-lg">Radiohead</span><span class="album-title-lg">OK Computer (1997)</span><span class="album-why-lg">La frontera donde el rock clásico se disuelve en algo completamente nuevo.</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="genre-section">
+        <div class="gsec-label">🔀 Subgéneros Destacados</div>
+        <div style="display:flex; flex-direction:column; gap:0.7rem;">
+          <div style="border:1px solid var(--border); padding:0.8rem 1rem;"><span style="font-family:'Bebas Neue',sans-serif; font-size:1.1rem; letter-spacing:0.05em; display:block;">Grunge</span><span style="font-size:0.78rem; color:var(--muted); display:block;">Seattle, 1991. Sucio, honesto, deshecho.</span></div>
+          <div style="border:1px solid var(--border); padding:0.8rem 1rem;"><span style="font-family:'Bebas Neue',sans-serif; font-size:1.1rem; letter-spacing:0.05em; display:block;">Post-Rock</span><span style="font-size:0.78rem; color:var(--muted); display:block;">Sin voces, sin límites. Arquitectura pura.</span></div>
+          <div style="border:1px solid var(--border); padding:0.8rem 1rem;"><span style="font-family:'Bebas Neue',sans-serif; font-size:1.1rem; letter-spacing:0.05em; display:block;">Indie Rock</span><span style="font-size:0.78rem; color:var(--muted); display:block;">Autónomo, ecléctico, perpetuamente reinventándose.</span></div>
+          <div style="border:1px solid var(--border); padding:0.8rem 1rem;"><span style="font-family:'Bebas Neue',sans-serif; font-size:1.1rem; letter-spacing:0.05em; display:block;">Hard Rock</span><span style="font-size:0.78rem; color:var(--muted); display:block;">Riffs densos, actitud, volumen máximo.</span></div>
+          <a href="#" style="border:1px solid var(--border); padding:0.8rem 1rem; display:flex; align-items:center; justify-content:space-between; text-decoration:none;"><span style="font-family:'Space Mono',monospace; font-size:0.68rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted);">Ver los 8 restantes</span><span style="color:var(--accent);">→</span></a>
+        </div>
+      </div>
+    </div>
+    <div class="relation-map">
+      <div class="relation-title">Géneros <span>Adyacentes</span></div>
+      <div class="relation-grid">
+        <a href="#" class="relation-node"><span class="rn-arrow">↗</span><span class="rn-genre">Metal</span><p class="rn-desc">El hijo más extremo del rock. Toma su base de guitarra y la lleva al límite.</p><span class="rn-adds">Más agresividad, técnica y complejidad</span><span class="rn-loses">Accesibilidad y melodías pop</span></a>
+        <a href="#" class="relation-node"><span class="rn-arrow">↗</span><span class="rn-genre">Punk</span><p class="rn-desc">La reacción DIY. Elimina la producción y potencia la rabia directa.</p><span class="rn-adds">Urgencia, crudeza y mensaje político</span><span class="rn-loses">Producción refinada y solos técnicos</span></a>
+        <a href="#" class="relation-node"><span class="rn-arrow">↗</span><span class="rn-genre">Blues</span><p class="rn-desc">El padre fundador. De donde vino el rock y hacia donde siempre puede volver.</p><span class="rn-adds">Profundidad emocional y raíces culturales</span><span class="rn-loses">Energía eléctrica y distorsión moderna</span></a>
+        <a href="#" class="relation-node"><span class="rn-arrow">↗</span><span class="rn-genre">Indie</span><p class="rn-desc">El rock reinventado por sí mismo. Experimental y ecléctico por naturaleza.</p><span class="rn-adds">Diversidad, introspección y arte conceptual</span><span class="rn-loses">La energía masiva del rock de estadios</span></a>
+        <a href="#" class="relation-node"><span class="rn-arrow">↗</span><span class="rn-genre">Electrónica</span><p class="rn-desc">Cuando el rock se funde con la tecnología. Texturas imposibles de lograr con instrumentos físicos.</p><span class="rn-adds">Paisajes sonoros y producción moderna</span><span class="rn-loses">La autenticidad orgánica del directo</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials fade-up" id="testimonials">
+  <div class="section-header">
+    <h2 class="section-title">Comunidad <span>&</span> Reseñas</h2>
+    <a href="#" class="section-link">Ver más →</a>
+  </div>
+  <div class="testimonial-grid">
+    <div class="testimonial-card"><div class="tc-genre">Rock</div><p class="tc-text">El rock me enseñó que la música puede ser honesta sin pedir perdón. Cuando escucho Nevermind siento que alguien entendió exactamente lo que no sabía cómo decir en palabras.</p><div class="tc-user"><div class="tc-avatar">VS</div><div><span class="tc-name">Valentina S.</span><span class="tc-age">22 años · Guayaquil</span></div></div></div>
+    <div class="testimonial-card"><div class="tc-genre">Jazz</div><p class="tc-text">Llegué al jazz porque me sentía abrumado con playlists de Spotify. Aquí descubrí Miles Davis y fue como encontrar un lenguaje completamente nuevo para el silencio.</p><div class="tc-user"><div class="tc-avatar">DM</div><div><span class="tc-name">Diego M.</span><span class="tc-age">27 años · Quito</span></div></div></div>
+    <div class="testimonial-card"><div class="tc-genre">Post-Rock</div><p class="tc-text">No sabía que la música sin letras podía hacerme llorar. Godspeed You! Black Emperor me demostró que el silencio entre las notas dice más que cualquier canción con palabras.</p><div class="tc-user"><div class="tc-avatar">AP</div><div><span class="tc-name">Andrea P.</span><span class="tc-age">19 años · Cuenca</span></div></div></div>
+    <div class="testimonial-card"><div class="tc-genre">Hip-Hop</div><p class="tc-text">Pensé que el hip-hop era solo trap de fiesta. Sound Home me mostró el boom bap de los 90 y de repente Illmatic se convirtió en el álbum que más escucho para concentrarme.</p><div class="tc-user"><div class="tc-avatar">JR</div><div><span class="tc-name">Juan R.</span><span class="tc-age">25 años · Manta</span></div></div></div>
+    <div class="testimonial-card"><div class="tc-genre">Ambient</div><p class="tc-text">Me cambió cómo trabajo. La música ambient convirtió mi cuarto en un espacio completamente diferente. Es como ponerle un filtro al tiempo.</p><div class="tc-user"><div class="tc-avatar">LC</div><div><span class="tc-name">Lucía C.</span><span class="tc-age">24 años · Quito</span></div></div></div>
+    <div class="testimonial-card"><div class="tc-genre">Metal</div><p class="tc-text">La gente se sorprende cuando les digo que el metal es catártico y no agresivo. Tool, Mastodon... no es rabia, es energía que finalmente tiene a dónde ir.</p><div class="tc-user"><div class="tc-avatar">CB</div><div><span class="tc-name">Carlos B.</span><span class="tc-age">29 años · Guayaquil</span></div></div></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact fade-up" id="contact">
+  <div class="contact-inner">
+    <div class="contact-left">
+      <h2 class="contact-heading">Hablemos <span>de Música</span></h2>
+      <p class="contact-desc">¿Tienes sugerencias de géneros, álbumes que añadir, o simplemente quieres compartir un descubrimiento musical? Este proyecto vive de la comunidad.</p>
+      <a href="mailto:daniel.argudo@uees.edu.ec" class="contact-email">✉ daniel.argudo@uees.edu.ec</a>
+      <div style="margin-top:2rem; padding-top:2rem; border-top:1px solid var(--border);">
+        <p style="font-family:'Space Mono',monospace; font-size:0.65rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); margin-bottom:1rem;">Sound Home en números</p>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+          <div><span style="font-family:'Bebas Neue',sans-serif; font-size:2.5rem; color:var(--accent); display:block; line-height:1;">48+</span><span style="font-family:'Space Mono',monospace; font-size:0.62rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.05em;">Géneros catalogados</span></div>
+          <div><span style="font-family:'Bebas Neue',sans-serif; font-size:2.5rem; color:var(--accent); display:block; line-height:1;">240+</span><span style="font-family:'Space Mono',monospace; font-size:0.62rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.05em;">Álbumes esenciales</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-right">
+      <p style="font-family:'Space Mono',monospace; font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--accent); margin-bottom:1.5rem; display:flex; align-items:center; gap:0.5rem;"><span style="width:1.5rem; height:1px; background:var(--accent); display:inline-block;"></span>Sugerir un género o álbum</p>
+      <div class="form-field"><label>Tu nombre</label><input type="text" placeholder="Nombre completo"></div>
+      <div class="form-field"><label>Correo electrónico</label><input type="email" placeholder="correo@ejemplo.com"></div>
+      <div class="form-field"><label>¿Qué tipo de sugerencia es?</label><select><option value="">Selecciona una opción</option><option>Nuevo género o subgénero</option><option>Álbum esencial no listado</option><option>Corrección o mejora</option><option>Testimonio / reseña personal</option><option>Otro</option></select></div>
+      <div class="form-field"><label>Tu mensaje</label><textarea placeholder="Cuéntanos sobre la música que quieres que más personas descubran..."></textarea></div>
+      <button class="btn-primary" style="width:100%; justify-content:center;" onclick="alert('¡Gracias por tu mensaje! Nos contactaremos pronto.')">Enviar Sugerencia →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Sound<span>Home</span></div>
+  <div class="footer-copy">© 2025 Sound Home — Plataforma de géneros musicales</div>
+  <div class="footer-links">
+    <a href="#explore">Géneros</a>
+    <a href="#featured">Diccionario</a>
+    <a href="#testimonials">Comunidad</a>
+    <a href="#contact">Contacto</a>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════════════════
+     MOOD DETAIL OVERLAYS (6 sentimientos)
+══════════════════════════════════════════════ -->
+
+<!-- MELANCOLÍA -->
+<div class="mood-detail-overlay" id="detail-melancolia">
+  <button class="back-btn" onclick="hideMood()">← Volver a sentimientos</button>
+  <div class="mood-hero" style="background:linear-gradient(135deg,#1a1025 0%,#0d0a1a 100%);">
+    <div class="mood-hero-bg">🌧</div>
+    <div>
+      <div class="mood-hero-label">🌧️ Sentimiento</div>
+      <div class="mood-hero-name">Melancolía</div>
+      <p class="mood-hero-desc">La melancolía no es lo opuesto a la alegría — es su sombra más honesta. Esta música no intenta sacarte del lugar donde estás, sino acompañarte en él con dignidad. Nació de la necesidad humana de procesar el duelo, la nostalgia y la pérdida a través del sonido. No es para deprimirse más, es para sentir que alguien más lo entendió también.</p>
+      <div class="mood-traits"><span class="mood-trait trait-a">🌑 Texturas oscuras</span><span class="mood-trait trait-b">🎻 Melodías lentas</span><span class="mood-trait trait-c">🌫 Atmósferas densas</span></div>
+    </div>
+    <div class="mood-stats">
+      <div class="stat-box"><span class="stat-val">8</span><span class="stat-label">Géneros asociados</span></div>
+      <div class="stat-box"><span class="stat-val">BPM ~70</span><span class="stat-label">Tempo promedio</span></div>
+      <div class="stat-box"><span class="stat-val">★ 4.9</span><span class="stat-label">Valoración</span></div>
+    </div>
+  </div>
+  <div class="mood-body">
+    <div class="mood-section">
+      <div class="gsec-label">💿 Álbumes esenciales</div>
+      <div class="album-list">
+        <div class="album-item"><span class="album-num">01</span><div><span class="album-artist">Sufjan Stevens</span><span class="album-title">Carrie & Lowell (2015)</span><span class="album-why">El duelo convertido en canción de cuna. Imposible escucharlo sin sentir algo.</span></div></div>
+        <div class="album-item"><span class="album-num">02</span><div><span class="album-artist">Grouper</span><span class="album-title">Ruins (2014)</span><span class="album-why">Piano y voz susurrada en una habitación vacía. La soledad hecha textura.</span></div></div>
+        <div class="album-item"><span class="album-num">03</span><div><span class="album-artist">Elliott Smith</span><span class="album-title">Either/Or (1997)</span><span class="album-why">Fragilidad como fortaleza. Canciones que parecen confesiones.</span></div></div>
+        <div class="album-item"><span class="album-num">04</span><div><span class="album-artist">Slowdive</span><span class="album-title">Souvlaki (1994)</span><span class="album-why">Shoegaze en su forma más trascendente. El sonido de recordar sin querer hacerlo.</span></div></div>
+        <div class="album-item"><span class="album-num">05</span><div><span class="album-artist">Nick Cave & The Bad Seeds</span><span class="album-title">The Boatman's Call (1997)</span><span class="album-why">Amor y pérdida destilados en canciones desnudas y devastadoras.</span></div></div>
+      </div>
+    </div>
+    <div class="mood-section">
+      <div class="gsec-label">🎼 Géneros que habitan aquí</div>
+      <div class="genre-list">
+        <div class="genre-item"><span class="genre-item-name">Shoegaze</span><span class="genre-item-desc">Muros de guitarra distorsionada que envuelven, no agreden. My Bloody Valentine lo perfeccionó.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Slowcore</span><span class="genre-item-desc">Canciones que no tienen prisa. Tempo lento como decisión artística, no como limitación.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Post-rock</span><span class="genre-item-desc">Sin letras que interpretar, solo emociones que atravesar. Godspeed, Mogwai, Explosions.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Indie folk</span><span class="genre-item-desc">Voz y guitarra contra el mundo. La intimidad como forma de resistencia.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Dark ambient</span><span class="genre-item-desc">Música que no tiene inicio ni final claro. Paisajes sonoros para introspección profunda.</span></div>
+      </div>
+    </div>
+    <div class="mood-section">
+      <div class="gsec-label">🎤 Artistas clave</div>
+      <div class="artist-list">
+        <div class="artist-item"><div class="artist-avatar">MBV</div><div><span class="artist-name">My Bloody Valentine</span><span class="artist-sub">Shoegaze · Reino Unido</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">GY!</div><div><span class="artist-name">Godspeed You! Black Emperor</span><span class="artist-sub">Post-rock · Canadá</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">ES</div><div><span class="artist-name">Elliott Smith</span><span class="artist-sub">Indie folk · EE.UU.</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">GP</div><div><span class="artist-name">Grouper</span><span class="artist-sub">Dream pop / Ambient · EE.UU.</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">SD</div><div><span class="artist-name">Slowdive</span><span class="artist-sub">Shoegaze · Reino Unido</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">SS</div><div><span class="artist-name">Sufjan Stevens</span><span class="artist-sub">Indie folk · EE.UU.</span></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="related-moods">
+    <div class="related-title">Sentimientos <span>adyacentes</span></div>
+    <div class="related-grid">
+      <button class="related-node" onclick="showMood('angustia')"><span class="rn-mood">Angustia</span><p class="rn-desc">Cuando la melancolía se vuelve más intensa y urgente.</p><span class="rn-when">Escuchar cuando la tristeza es rabia reprimida</span></button>
+      <button class="related-node" onclick="showMood('relajado')"><span class="rn-mood">Relajado</span><p class="rn-desc">La melancolía que se disuelve en aceptación tranquila.</p><span class="rn-when">Escuchar cuando necesitas soltar, no aferrarte</span></button>
+      <button class="related-node" onclick="showMood('romantico')"><span class="rn-mood">Romántico</span><p class="rn-desc">La nostalgia del amor perdido vive en el cruce entre ambos.</p><span class="rn-when">Escuchar cuando el pasado duele con ternura</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- ENERGÉTICO -->
+<div class="mood-detail-overlay" id="detail-energetico">
+  <button class="back-btn" onclick="hideMood()">← Volver a sentimientos</button>
+  <div class="mood-hero" style="background:linear-gradient(135deg,#1a1000 0%,#0f0a00 100%);">
+    <div class="mood-hero-bg">⚡</div>
+    <div>
+      <div class="mood-hero-label">⚡ Sentimiento</div>
+      <div class="mood-hero-name">Energético</div>
+      <p class="mood-hero-desc">Hay momentos en que el cuerpo pide más que música — pide combustión. El estado energético en la música no es simplemente velocidad o volumen: es la sensación de que algo está a punto de explotar de forma positiva. Géneros como el punk, el drum & bass y el metal canalizaron esta energía primordial en formas radicalmente distintas pero igualmente poderosas.</p>
+      <div class="mood-traits"><span class="mood-trait trait-a">⚡ Tempo alto</span><span class="mood-trait trait-b">🥁 Ritmos potentes</span><span class="mood-trait trait-c">🔊 Volumen y distorsión</span></div>
+    </div>
+    <div class="mood-stats">
+      <div class="stat-box"><span class="stat-val">7</span><span class="stat-label">Géneros asociados</span></div>
+      <div class="stat-box"><span class="stat-val">BPM ~155</span><span class="stat-label">Tempo promedio</span></div>
+      <div class="stat-box"><span class="stat-val">★ 4.7</span><span class="stat-label">Valoración</span></div>
+    </div>
+  </div>
+  <div class="mood-body">
+    <div class="mood-section">
+      <div class="gsec-label">💿 Álbumes esenciales</div>
+      <div class="album-list">
+        <div class="album-item"><span class="album-num">01</span><div><span class="album-artist">Rage Against the Machine</span><span class="album-title">Rage Against the Machine (1992)</span><span class="album-why">Rabia política y groove imposible de ignorar. El disco que demuestra que la energía puede tener mensaje.</span></div></div>
+        <div class="album-item"><span class="album-num">02</span><div><span class="album-artist">The Prodigy</span><span class="album-title">Music for the Jilted Generation (1994)</span><span class="album-why">Electrónica y punk fusionados. El caos como coreografía.</span></div></div>
+        <div class="album-item"><span class="album-num">03</span><div><span class="album-artist">Kendrick Lamar</span><span class="album-title">good kid, m.A.A.d city (2012)</span><span class="album-why">Hip-hop con la urgencia de quien tiene algo urgente que decir.</span></div></div>
+        <div class="album-item"><span class="album-num">04</span><div><span class="album-artist">Bad Bunny</span><span class="album-title">X 100PRE (2018)</span><span class="album-why">El reggaeton redefinido con actitud y producción de vanguardia.</span></div></div>
+        <div class="album-item"><span class="album-num">05</span><div><span class="album-artist">Aphex Twin</span><span class="album-title">Come to Daddy (1997)</span><span class="album-why">Electrónica industrial que parece querer destruir tus parlantes.</span></div></div>
+      </div>
+    </div>
+    <div class="mood-section">
+      <div class="gsec-label">🎼 Géneros que habitan aquí</div>
+      <div class="genre-list">
+        <div class="genre-item"><span class="genre-item-name">Hardcore punk</span><span class="genre-item-desc">Velocidad extrema y letras directas. Sin adornos, sin pretensiones, solo urgencia.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Drum & Bass</span><span class="genre-item-desc">Baterías fracturadas a 170 BPM. El deporte extremo de la música electrónica.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Trap</span><span class="genre-item-desc">Hi-hats como metralletas, bajos que deforman el espacio. Energía urbana concentrada.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Thrash metal</span><span class="genre-item-desc">Metallica y Slayer pusieron la adrenalina en partitura. Para cuando el gym no alcanza.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Reggaeton</span><span class="genre-item-desc">El dembow es un ritmo diseñado para mover el cuerpo sin permiso. Funciona siempre.</span></div>
+      </div>
+    </div>
+    <div class="mood-section">
+      <div class="gsec-label">🎤 Artistas clave</div>
+      <div class="artist-list">
+        <div class="artist-item"><div class="artist-avatar">RATM</div><div><span class="artist-name">Rage Against the Machine</span><span class="artist-sub">Rap metal · EE.UU.</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">TP</div><div><span class="artist-name">The Prodigy</span><span class="artist-sub">Big beat / Electrónica · UK</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">KL</div><div><span class="artist-name">Kendrick Lamar</span><span class="artist-sub">Hip-hop · EE.UU.</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">BB</div><div><span class="artist-name">Bad Bunny</span><span class="artist-sub">Reggaeton / Trap latino · PR</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">AT</div><div><span class="artist-name">Aphex Twin</span><span class="artist-sub">Electrónica · Reino Unido</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">MT</div><div><span class="artist-name">Metallica</span><span class="artist-sub">Thrash metal · EE.UU.</span></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="related-moods">
+    <div class="related-title">Sentimientos <span>adyacentes</span></div>
+    <div class="related-grid">
+      <button class="related-node" onclick="showMood('angustia')"><span class="rn-mood">Angustia</span><p class="rn-desc">Energía que se vuelve más oscura y menos liberadora.</p><span class="rn-when">Escuchar cuando la energía viene del caos interno</span></button>
+      <button class="related-node" onclick="showMood('enfocado')"><span class="rn-mood">Enfocado</span><p class="rn-desc">La energía canalizada hacia un objetivo concreto.</p><span class="rn-when">Escuchar cuando el movimiento necesita dirección</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- RELAJADO -->
+<div class="mood-detail-overlay" id="detail-relajado">
+  <button class="back-btn" onclick="hideMood()">← Volver a sentimientos</button>
+  <div class="mood-hero" style="background:linear-gradient(135deg,#001a1a 0%,#050f0f 100%);">
+    <div class="mood-hero-bg">🌊</div>
+    <div>
+      <div class="mood-hero-label">🌊 Sentimiento</div>
+      <div class="mood-hero-name">Relajado</div>
+      <p class="mood-hero-desc">Hay una diferencia entre música de fondo y música que activamente te desacelera. Los géneros aquí reunidos no son simplemente lentos — tienen una arquitectura pensada para reducir la tensión mental. Desde el jazz modal de Miles Davis hasta los drones electrónicos de Brian Eno, estos sonidos operan casi como intervenciones terapéuticas para el sistema nervioso.</p>
+      <div class="mood-traits"><span class="mood-trait trait-a">🌿 Tempo lento</span><span class="mood-trait trait-b">🎷 Armonías abiertas</span><span class="mood-trait trait-c">🌙 Sin urgencia melódica</span></div>
+    </div>
+    <div class="mood-stats">
+      <div class="stat-box"><span class="stat-val">9</span><span class="stat-label">Géneros asociados</span></div>
+      <div class="stat-box"><span class="stat-val">BPM ~75</span><span class="stat-label">Tempo promedio</span></div>
+      <div class="stat-box"><span class="stat-val">★ 4.8</span><span class="stat-label">Valoración</span></div>
+    </div>
+  </div>
+  <div class="mood-body">
+    <div class="mood-section">
+      <div class="gsec-label">💿 Álbumes esenciales</div>
+      <div class="album-list">
+        <div class="album-item"><span class="album-num">01</span><div><span class="album-artist">Brian Eno</span><span class="album-title">Ambient 1: Music for Airports (1978)</span><span class="album-why">El álbum que inventó la música ambient. Diseñado explícitamente para calmar la mente.</span></div></div>
+        <div class="album-item"><span class="album-num">02</span><div><span class="album-artist">Miles Davis</span><span class="album-title">Kind of Blue (1959)</span><span class="album-why">El jazz más accesible y profundo. Improvisación como respiración pausada.</span></div></div>
+        <div class="album-item"><span class="album-num">03</span><div><span class="album-artist">João Gilberto</span><span class="album-title">Chega de Saudade (1959)</span><span class="album-why">La bossa nova naciente. Voz y guitarra como un susurro eterno.</span></div></div>
+        <div class="album-item"><span class="album-num">04</span><div><span class="album-artist">Nils Frahm</span><span class="album-title">Spaces (2013)</span><span class="album-why">Piano clásico y electrónica minimalista. Cada nota tiene todo el tiempo del mundo.</span></div></div>
+        <div class="album-item"><span class="album-num">05</span><div><span class="album-artist">Erykah Badu</span><span class="album-title">Mama's Gun (2000)</span><span class="album-why">Neo-soul que fluye como aceite tibio. Para relajarse sin perder el groove.</span></div></div>
+      </div>
+    </div>
+    <div class="mood-section">
+      <div class="gsec-label">🎼 Géneros que habitan aquí</div>
+      <div class="genre-list">
+        <div class="genre-item"><span class="genre-item-name">Ambient</span><span class="genre-item-desc">Música que no pide atención activa. Funciona igual si la escuchas o si simplemente existe a tu alrededor.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Bossa Nova</span><span class="genre-item-desc">Ritmo, melancolía y sofisticación brasileña. La música perfecta para una tarde sin urgencias.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Jazz modal</span><span class="genre-item-desc">Miles Davis demostró que la relajación puede ser intelectualmente estimulante a la vez.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Neo-soul</span><span class="genre-item-desc">Groove suave con profundidad emocional. D'Angelo, Erykah Badu, Maxwell.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Piano contemporáneo</span><span class="genre-item-desc">Nils Frahm y Ólafur Arnalds redefinieron el piano clásico para el siglo XXI.</span></div>
+      </div>
+    </div>
+    <div class="mood-section">
+      <div class="gsec-label">🎤 Artistas clave</div>
+      <div class="artist-list">
+        <div class="artist-item"><div class="artist-avatar">BE</div><div><span class="artist-name">Brian Eno</span><span class="artist-sub">Ambient · Reino Unido</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">MD</div><div><span class="artist-name">Miles Davis</span><span class="artist-sub">Jazz modal · EE.UU.</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">NF</div><div><span class="artist-name">Nils Frahm</span><span class="artist-sub">Piano contemporáneo · Alemania</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">EB</div><div><span class="artist-name">Erykah Badu</span><span class="artist-sub">Neo-soul · EE.UU.</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">JG</div><div><span class="artist-name">João Gilberto</span><span class="artist-sub">Bossa Nova · Brasil</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">OA</div><div><span class="artist-name">Ólafur Arnalds</span><span class="artist-sub">Neoclásico / Ambient · Islandia</span></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="related-moods">
+    <div class="related-title">Sentimientos <span>adyacentes</span></div>
+    <div class="related-grid">
+      <button class="related-node" onclick="showMood('enfocado')"><span class="rn-mood">Enfocado</span><p class="rn-desc">Cuando la relajación necesita un objetivo concreto.</p><span class="rn-when">Escuchar para estudiar o trabajar profundo</span></button>
+      <button class="related-node" onclick="showMood('melancolia')"><span class="rn-mood">Melancolía</span><p class="rn-desc">La relajación que se tiñe de nostalgia suave.</p><span class="rn-when">Escuchar cuando el descanso tiene un sabor agridulce</span></button>
+      <button class="related-node" onclick="showMood('romantico')"><span class="rn-mood">Romántico</span><p class="rn-desc">La calma compartida con alguien más.</p><span class="rn-when">Escuchar en momentos de intimidad tranquila</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- ANGUSTIA -->
+<div class="mood-detail-overlay" id="detail-angustia">
+  <button class="back-btn" onclick="hideMood()">← Volver a sentimientos</button>
+  <div class="mood-hero" style="background:linear-gradient(135deg,#1a0008 0%,#0f0005 100%);">
+    <div class="mood-hero-bg">🔥</div>
+    <div>
+      <div class="mood-hero-label">🔥 Sentimiento</div>
+      <div class="mood-hero-name">Angustia</div>
+      <p class="mood-hero-desc">La angustia es diferente de la tristeza: es tensa, urgente, sin salida aparente. La música que mejor la traduce no suaviza esa sensación — la amplifica de manera controlada para que puedas atravesarla. El post-punk de Joy Division, el industrial de Nine Inch Nails o el black metal funcionan porque no mienten sobre lo que la angustia realmente es.</p>
+      <div class="mood-traits"><span class="mood-trait trait-a">🌑 Disonancia</span><span class="mood-trait trait-b">🔊 Densidad sonora</span><span class="mood-trait trait-c">⚡ Tensión sin resolver</span></div>
+    </div>
+    <div class="mood-stats">
+      <div class="stat-box"><span class="stat-val">6</span><span class="stat-label">Géneros asociados</span></div>
+      <div class="stat-box"><span class="stat-val">Variable</span><span class="stat-label">Tempo</span></div>
+      <div class="stat-box"><span class="stat-val">★ 4.6</span><span class="stat-label">Valoración</span></div>
+    </div>
+  </div>
+  <div class="mood-body">
+    <div class="mood-section">
+      <div class="gsec-label">💿 Álbumes esenciales</div>
+      <div class="album-list">
+        <div class="album-item"><span class="album-num">01</span><div><span class="album-artist">Joy Division</span><span class="album-title">Unknown Pleasures (1979)</span><span class="album-why">El álbum que definió la angustia moderna. Ian Curtis convirtió su dolor en arquitectura.</span></div></div>
+        <div class="album-item"><span class="album-num">02</span><div><span class="album-artist">Nine Inch Nails</span><span class="album-title">The Downward Spiral (1994)</span><span class="album-why">La decadencia interna narrada con producción de película. Catártico y perturbador.</span></div></div>
+        <div class="album-item"><span class="album-num">03</span><div><span class="album-artist">Swans</span><span class="album-title">Filth (1983)</span><span class="album-why">Noise rock en su forma más primitiva e intencionalmente incómoda.</span></div></div>
+        <div class="album-item"><span class="album-num">04</span><div><span class="album-artist">Scott Walker</span><span class="album-title">Bish Bosch (2012)</span><span class="album-why">Avant-garde que desafía toda convención. La angustia como exploración artística límite.</span></div></div>
+        <div class="album-item"><span class="album-num">05</span><div><span class="album-artist">Portishead</span><span class="album-title">Dummy (1994)</span><span class="album-why">Trip-hop oscuro que hace de la paranoia algo elegante e inevitablemente adictivo.</span></div></div>
+      </div>
+    </div>
+    <div class="mood-section">
+      <div class="gsec-label">🎼 Géneros que habitan aquí</div>
+      <div class="genre-list">
+        <div class="genre-item"><span class="genre-item-name">Post-punk</span><span class="genre-item-desc">El punk que se volvió hacia adentro. Joy Division, The Cure, Gang of Four. Oscuridad con ritmo.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Industrial</span><span class="genre-item-desc">Sonidos de máquinas y distorsión extrema. La angustia de la modernidad industrial traducida a música.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Noise rock</span><span class="genre-item-desc">Feedback y caos controlado. Para cuando la angustia necesita volumen máximo y textura abrasiva.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Trip-hop</span><span class="genre-item-desc">Ritmos lentos y pesados con letras que no prometen salidas. Portishead, Massive Attack.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Black metal</span><span class="genre-item-desc">Nihilismo y desesperación llevados al extremo musical. Para quien necesita lo absoluto.</span></div>
+      </div>
+    </div>
+    <div class="mood-section">
+      <div class="gsec-label">🎤 Artistas clave</div>
+      <div class="artist-list">
+        <div class="artist-item"><div class="artist-avatar">JD</div><div><span class="artist-name">Joy Division</span><span class="artist-sub">Post-punk · Reino Unido</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">NIN</div><div><span class="artist-name">Nine Inch Nails</span><span class="artist-sub">Industrial rock · EE.UU.</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">PH</div><div><span class="artist-name">Portishead</span><span class="artist-sub">Trip-hop · Reino Unido</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">SW</div><div><span class="artist-name">Swans</span><span class="artist-sub">Noise rock · EE.UU.</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">TC</div><div><span class="artist-name">The Cure</span><span class="artist-sub">Post-punk · Reino Unido</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">MA</div><div><span class="artist-name">Massive Attack</span><span class="artist-sub">Trip-hop · Reino Unido</span></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="related-moods">
+    <div class="related-title">Sentimientos <span>adyacentes</span></div>
+    <div class="related-grid">
+      <button class="related-node" onclick="showMood('melancolia')"><span class="rn-mood">Melancolía</span><p class="rn-desc">La angustia que se enfría y se vuelve nostalgia.</p><span class="rn-when">Escuchar cuando la tensión empieza a ceder</span></button>
+      <button class="related-node" onclick="showMood('energetico')"><span class="rn-mood">Energético</span><p class="rn-desc">La angustia liberada como explosión física.</p><span class="rn-when">Escuchar cuando necesitas sacar todo afuera</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- ENFOCADO -->
+<div class="mood-detail-overlay" id="detail-enfocado">
+  <button class="back-btn" onclick="hideMood()">← Volver a sentimientos</button>
+  <div class="mood-hero" style="background:linear-gradient(135deg,#001a10 0%,#040f08 100%);">
+    <div class="mood-hero-bg">🎯</div>
+    <div>
+      <div class="mood-hero-label">🎯 Sentimiento</div>
+      <div class="mood-hero-name">Enfocado</div>
+      <p class="mood-hero-desc">El estado de flow es esquivo pero real: esa sensación de que tu mente trabaja sin fricción, sin distracciones internas ni externas. La música ideal para este estado no compite con tu pensamiento — lo acompaña. Investigaciones en neurociencia cognitiva sugieren que la música instrumental sin letra, especialmente a BPM moderados, reduce la carga cognitiva y extiende la concentración sostenida.</p>
+      <div class="mood-traits"><span class="mood-trait trait-a">🎯 Sin letra distractora</span><span class="mood-trait trait-b">🔄 Patrones repetitivos</span><span class="mood-trait trait-c">🧠 Estimulación moderada</span></div>
+    </div>
+    <div class="mood-stats">
+      <div class="stat-box"><span class="stat-val">7</span><span class="stat-label">Géneros asociados</span></div>
+      <div class="stat-box"><span class="stat-val">BPM ~90</span><span class="stat-label">Tempo promedio</span></div>
+      <div class="stat-box"><span class="stat-val">★ 4.9</span><span class="stat-label">Valoración</span></div>
+    </div>
+  </div>
+  <div class="mood-body">
+    <div class="mood-section">
+      <div class="gsec-label">💿 Álbumes esenciales</div>
+      <div class="album-list">
+        <div class="album-item"><span class="album-num">01</span><div><span class="album-artist">Johann Sebastian Bach</span><span class="album-title">Las Variaciones Goldberg (1741)</span><span class="album-why">Complejidad estructural que paradójicamente libera la mente. La arquitectura perfecta.</span></div></div>
+        <div class="album-item"><span class="album-num">02</span><div><span class="album-artist">Steve Reich</span><span class="album-title">Music for 18 Musicians (1978)</span><span class="album-why">Minimalismo en movimiento perpetuo. El cerebro entra en modo alpha en 10 minutos.</span></div></div>
+        <div class="album-item"><span class="album-num">03</span><div><span class="album-artist">Tycho</span><span class="album-title">Dive (2011)</span><span class="album-why">Lo-fi electrónica con texturas cálidas. El soundtrack ideal para trabajo creativo.</span></div></div>
+        <div class="album-item"><span class="album-num">04</span><div><span class="album-artist">Marcin Wasilewski Trio</span><span class="album-title">Faithful (2011)</span><span class="album-why">Jazz contemporáneo sin estridencias. Piano, bajo y batería en diálogo perfecto.</span></div></div>
+        <div class="album-item"><span class="album-num">05</span><div><span class="album-artist">Boards of Canada</span><span class="album-title">Music Has the Right to Children (1998)</span><span class="album-why">Electrónica nostálgica que crea espacio mental. Hipnótico sin ser adormecedor.</span></div></div>
+      </div>
+    </div>
+    <div class="mood-section">
+      <div class="gsec-label">🎼 Géneros que habitan aquí</div>
+      <div class="genre-list">
+        <div class="genre-item"><span class="genre-item-name">Minimalismo clásico</span><span class="genre-item-desc">Reich, Glass, Arvo Pärt. Repetición como meditación. La mente se ancla en los patrones.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Lo-fi hip hop</span><span class="genre-item-desc">El género que YouTube convirtió en sinónimo de "tiempo de estudio". Beats cálidos y sin pretensiones.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Jazz contemporáneo</span><span class="genre-item-desc">Sin el frenesí del bebop, solo atmósferas abiertas y conversación instrumental refinada.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Ambient electrónico</span><span class="genre-item-desc">Texturas que llenan el espacio sin ocuparlo. Ideal para trabajo que requiere concentración larga.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Post-bop</span><span class="genre-item-desc">Jazz exploratorio pero sin la agresividad del free jazz. La zona perfecta entre estructura y libertad.</span></div>
+      </div>
+    </div>
+    <div class="mood-section">
+      <div class="gsec-label">🎤 Artistas clave</div>
+      <div class="artist-list">
+        <div class="artist-item"><div class="artist-avatar">SR</div><div><span class="artist-name">Steve Reich</span><span class="artist-sub">Minimalismo · EE.UU.</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">TY</div><div><span class="artist-name">Tycho</span><span class="artist-sub">Lo-fi electrónica · EE.UU.</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">BoC</div><div><span class="artist-name">Boards of Canada</span><span class="artist-sub">Electrónica · Escocia</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">PG</div><div><span class="artist-name">Philip Glass</span><span class="artist-sub">Minimalismo · EE.UU.</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">AP</div><div><span class="artist-name">Arvo Pärt</span><span class="artist-sub">Minimalismo sacro · Estonia</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">NF</div><div><span class="artist-name">Nils Frahm</span><span class="artist-sub">Piano neoclásico · Alemania</span></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="related-moods">
+    <div class="related-title">Sentimientos <span>adyacentes</span></div>
+    <div class="related-grid">
+      <button class="related-node" onclick="showMood('relajado')"><span class="rn-mood">Relajado</span><p class="rn-desc">Cuando el enfoque se disuelve en calma merecida.</p><span class="rn-when">Escuchar al terminar una sesión de trabajo</span></button>
+      <button class="related-node" onclick="showMood('energetico')"><span class="rn-mood">Energético</span><p class="rn-desc">Cuando el foco necesita más combustión que precisión.</p><span class="rn-when">Escuchar para tareas físicas o creativas explosivas</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- ROMÁNTICO -->
+<div class="mood-detail-overlay" id="detail-romantico">
+  <button class="back-btn" onclick="hideMood()">← Volver a sentimientos</button>
+  <div class="mood-hero" style="background:linear-gradient(135deg,#1a001a 0%,#0f000f 100%);">
+    <div class="mood-hero-bg">💜</div>
+    <div>
+      <div class="mood-hero-label">💜 Sentimiento</div>
+      <div class="mood-hero-name">Romántico</div>
+      <p class="mood-hero-desc">El amor tiene más de un lenguaje musical. No es lo mismo la euforia del enamoramiento que la ternura de lo cotidiano, o la tristeza del amor que termina. Los géneros aquí agrupados no celebran solo una versión del amor — la exploran en toda su complejidad: desde la sensualidad del R&B hasta la vulnerabilidad del dream pop, pasando por el bolero que lleva décadas diciéndolo todo.</p>
+      <div class="mood-traits"><span class="mood-trait trait-a">💗 Vulnerabilidad emocional</span><span class="mood-trait trait-b">🎶 Melodías vocales</span><span class="mood-trait trait-c">🌹 Intimidad sonora</span></div>
+    </div>
+    <div class="mood-stats">
+      <div class="stat-box"><span class="stat-val">8</span><span class="stat-label">Géneros asociados</span></div>
+      <div class="stat-box"><span class="stat-val">BPM ~85</span><span class="stat-label">Tempo promedio</span></div>
+      <div class="stat-box"><span class="stat-val">★ 4.8</span><span class="stat-label">Valoración</span></div>
+    </div>
+  </div>
+  <div class="mood-body">
+    <div class="mood-section">
+      <div class="gsec-label">💿 Álbumes esenciales</div>
+      <div class="album-list">
+        <div class="album-item"><span class="album-num">01</span><div><span class="album-artist">D'Angelo</span><span class="album-title">Voodoo (2000)</span><span class="album-why">Neo-soul y funk fundidos en el álbum más sensual de los últimos 30 años.</span></div></div>
+        <div class="album-item"><span class="album-num">02</span><div><span class="album-artist">Frank Ocean</span><span class="album-title">Blonde (2016)</span><span class="album-why">El amor millennial en toda su ambigüedad y belleza sin resolver.</span></div></div>
+        <div class="album-item"><span class="album-num">03</span><div><span class="album-artist">Cocteau Twins</span><span class="album-title">Heaven or Las Vegas (1990)</span><span class="album-why">Dream pop en su máxima expresión etérea. El sonido del enamoramiento en loop.</span></div></div>
+        <div class="album-item"><span class="album-num">04</span><div><span class="album-artist">Ibrahim Ferrer</span><span class="album-title">Buena Vista Social Club (1997)</span><span class="album-why">El bolero y el son cubano destilados en su forma más pura y emotiva.</span></div></div>
+        <div class="album-item"><span class="album-num">05</span><div><span class="album-artist">The National</span><span class="album-title">Boxer (2007)</span><span class="album-why">Amor adulto, con sus silencios incómodos y su belleza cotidiana. Indie rock íntimo.</span></div></div>
+      </div>
+    </div>
+    <div class="mood-section">
+      <div class="gsec-label">🎼 Géneros que habitan aquí</div>
+      <div class="genre-list">
+        <div class="genre-item"><span class="genre-item-name">R&B contemporáneo</span><span class="genre-item-desc">Frank Ocean, SZA, Solange. El amor en el siglo XXI: complejo, digital, hermoso y roto a la vez.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Dream pop</span><span class="genre-item-desc">Shoegaze que abraza en lugar de envolver. Melodías que flotan sobre atmósferas oníricas.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Soul clásico</span><span class="genre-item-desc">Aretha Franklin, Marvin Gaye. El amor como acto político y espiritual al mismo tiempo.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Bolero</span><span class="genre-item-desc">Décadas de amor destilado en letras directas y melodías que no caducan nunca.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Indie folk romántico</span><span class="genre-item-desc">Bon Iver, The National, Iron & Wine. El amor en voz baja, sin exageraciones.</span></div>
+      </div>
+    </div>
+    <div class="mood-section">
+      <div class="gsec-label">🎤 Artistas clave</div>
+      <div class="artist-list">
+        <div class="artist-item"><div class="artist-avatar">DA</div><div><span class="artist-name">D'Angelo</span><span class="artist-sub">Neo-soul · EE.UU.</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">FO</div><div><span class="artist-name">Frank Ocean</span><span class="artist-sub">R&B alternativo · EE.UU.</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">CT</div><div><span class="artist-name">Cocteau Twins</span><span class="artist-sub">Dream pop · Escocia</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">MG</div><div><span class="artist-name">Marvin Gaye</span><span class="artist-sub">Soul / R&B · EE.UU.</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">TN</div><div><span class="artist-name">The National</span><span class="artist-sub">Indie rock · EE.UU.</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">BI</div><div><span class="artist-name">Bon Iver</span><span class="artist-sub">Indie folk · EE.UU.</span></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="related-moods">
+    <div class="related-title">Sentimientos <span>adyacentes</span></div>
+    <div class="related-grid">
+      <button class="related-node" onclick="showMood('melancolia')"><span class="rn-mood">Melancolía</span><p class="rn-desc">El amor que ya no está, pero que todavía duele con ternura.</p><span class="rn-when">Escuchar cuando el amor duele más que alegra</span></button>
+      <button class="related-node" onclick="showMood('relajado')"><span class="rn-mood">Relajado</span><p class="rn-desc">El amor sin tensión, la intimidad en calma.</p><span class="rn-when">Escuchar en momentos tranquilos junto a alguien</span></button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ── TAB SWITCHING ──
+  function switchTab(tab, btn) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + tab).classList.add('active');
+  }
+
+  // ── MOOD DETAIL OVERLAY ──
+  function showMood(id) {
+    // Close any open overlay first
+    document.querySelectorAll('.mood-detail-overlay').forEach(d => d.classList.remove('active'));
+    const overlay = document.getElementById('detail-' + id);
+    if (overlay) {
+      overlay.classList.add('active');
+      overlay.scrollTop = 0;
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  function hideMood() {
+    document.querySelectorAll('.mood-detail-overlay').forEach(d => d.classList.remove('active'));
+    document.body.style.overflow = '';
+    // Scroll back to the moods tab in the explore section
+    const exploreSection = document.getElementById('explore');
+    if (exploreSection) {
+      setTimeout(() => exploreSection.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+    }
+  }
+
+  // Close overlay on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hideMood();
+  });
+
+  // ── SCROLL FADE-UP ──
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
