@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sound Home — Conoce la Música</title>
+<title>Sound Home — Explora la Música</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -1057,67 +1057,67 @@
         <span class="genre-sub">Grunge · Alt · Clásico · Post-rock</span>
         <span class="genre-count">12 subgéneros</span>
       </a>
-      <a href="#" class="genre-card">
+      <a href="#" class="genre-card" onclick="event.preventDefault();showGenre('hiphop')">
         <span class="genre-icon">🎤</span>
         <span class="genre-name">Hip-Hop</span>
         <span class="genre-sub">Trap · Boom Bap · Conscious · Cloud</span>
         <span class="genre-count">9 subgéneros</span>
       </a>
-      <a href="#" class="genre-card">
+      <a href="#" class="genre-card" onclick="event.preventDefault();showGenre('electronica')">
         <span class="genre-icon">🎹</span>
         <span class="genre-name">Electrónica</span>
         <span class="genre-sub">House · Techno · Ambient · Drum & Bass</span>
         <span class="genre-count">15 subgéneros</span>
       </a>
-      <a href="#" class="genre-card">
+      <a href="#" class="genre-card" onclick="event.preventDefault();showGenre('jazz')">
         <span class="genre-icon">🎷</span>
         <span class="genre-name">Jazz</span>
         <span class="genre-sub">Bebop · Fusion · Smooth · Neo-soul</span>
         <span class="genre-count">8 subgéneros</span>
       </a>
-      <a href="#" class="genre-card">
+      <a href="#" class="genre-card" onclick="event.preventDefault();showGenre('metal')">
         <span class="genre-icon">🤘</span>
         <span class="genre-name">Metal</span>
         <span class="genre-sub">Death · Black · Prog · Nu-metal · Doom</span>
         <span class="genre-count">11 subgéneros</span>
       </a>
-      <a href="#" class="genre-card">
+      <a href="#" class="genre-card" onclick="event.preventDefault();showGenre('rnb')">
         <span class="genre-icon">🎵</span>
         <span class="genre-name">R&B</span>
         <span class="genre-sub">Soul · Neo-soul · Contemporary · Funk</span>
         <span class="genre-count">7 subgéneros</span>
       </a>
-      <a href="#" class="genre-card">
+      <a href="#" class="genre-card" onclick="event.preventDefault();showGenre('folk')">
         <span class="genre-icon">🌿</span>
         <span class="genre-name">Folk</span>
         <span class="genre-sub">Indie folk · Americana · Celtic · Singer-songwriter</span>
         <span class="genre-count">6 subgéneros</span>
       </a>
-      <a href="#" class="genre-card">
+      <a href="#" class="genre-card" onclick="event.preventDefault();showGenre('clasica')">
         <span class="genre-icon">🎻</span>
         <span class="genre-name">Clásica</span>
         <span class="genre-sub">Barroco · Romántico · Contemporáneo · Minimalismo</span>
         <span class="genre-count">5 subgéneros</span>
       </a>
-      <a href="#" class="genre-card">
+      <a href="#" class="genre-card" onclick="event.preventDefault();showGenre('pop')">
         <span class="genre-icon">🎶</span>
         <span class="genre-name">Pop</span>
         <span class="genre-sub">Synth-pop · Electropop · Art pop · K-pop</span>
         <span class="genre-count">10 subgéneros</span>
       </a>
-      <a href="#" class="genre-card">
+      <a href="#" class="genre-card" onclick="event.preventDefault();showGenre('reggae')">
         <span class="genre-icon">🌊</span>
         <span class="genre-name">Reggae</span>
         <span class="genre-sub">Dancehall · Dub · Reggaeton · Ska</span>
         <span class="genre-count">5 subgéneros</span>
       </a>
-      <a href="#" class="genre-card">
+      <a href="#" class="genre-card" onclick="event.preventDefault();showGenre('punk')">
         <span class="genre-icon">⚡</span>
         <span class="genre-name">Punk</span>
         <span class="genre-sub">Hardcore · Post-punk · Emo · Pop-punk</span>
         <span class="genre-count">7 subgéneros</span>
       </a>
-      <a href="#" class="genre-card" style="background:var(--surface2); display:flex; align-items:center; justify-content:center;">
+      <a href="#" class="genre-card" onclick="event.preventDefault()" style="background:var(--surface2); display:flex; align-items:center; justify-content:center;">
         <span style="font-family:'Bebas Neue',sans-serif; font-size:1.1rem; letter-spacing:0.1em; color:var(--muted); text-align:center; position:relative; z-index:1;">Ver todos los géneros →</span>
       </a>
     </div>
@@ -1701,6 +1701,530 @@
   </div>
 </div>
 
+<!-- ══════════════════════════════════════════
+     GENRE DETAIL OVERLAYS
+════════════════════════════════════════════ -->
+
+<!-- HIP-HOP -->
+<div class="mood-detail-overlay" id="genre-hiphop">
+  <button class="back-btn" onclick="hideGenre()">← Volver a géneros</button>
+  <div class="mood-hero" style="background:linear-gradient(135deg,#0d0a1a 0%,#0a0a0a 100%);">
+    <div class="mood-hero-bg">🎤</div>
+    <div>
+      <div class="mood-hero-label">🎤 Género</div>
+      <div class="mood-hero-name">Hip-Hop</div>
+      <p class="mood-hero-desc">Nacido en el South Bronx en los años 70, el hip-hop es mucho más que música: es cultura, lenguaje y resistencia. De los bloque parties de DJ Kool Herc a los álbumes conceptuales de Kendrick Lamar, el género ha mutado sin perder su núcleo — la voz como herramienta de verdad.</p>
+      <div class="mood-traits"><span class="mood-trait trait-a">🎙️ Líricas densas</span><span class="mood-trait trait-b">🥁 Producción rítmica</span><span class="mood-trait trait-c">🏙️ Cultura urbana</span></div>
+    </div>
+    <div class="mood-stats">
+      <div class="stat-box"><span class="stat-val">9</span><span class="stat-label">Subgéneros</span></div>
+      <div class="stat-box"><span class="stat-val">BPM ~90</span><span class="stat-label">Tempo promedio</span></div>
+      <div class="stat-box"><span class="stat-val">★ 4.7</span><span class="stat-label">Valoración</span></div>
+    </div>
+  </div>
+  <div class="mood-body">
+    <div class="mood-section">
+      <div class="gsec-label">💿 Álbumes esenciales</div>
+      <div class="album-list">
+        <div class="album-item"><span class="album-num">01</span><div><span class="album-artist">Kendrick Lamar</span><span class="album-title">To Pimp a Butterfly (2015)</span><span class="album-why">Jazz, funk y spoken word al servicio de un manifiesto político. El hip-hop como arte total.</span></div></div>
+        <div class="album-item"><span class="album-num">02</span><div><span class="album-artist">Nas</span><span class="album-title">Illmatic (1994)</span><span class="album-why">39 minutos de boom bap perfecto. El retrato más honesto de la vida en los proyectos de Nueva York.</span></div></div>
+        <div class="album-item"><span class="album-num">03</span><div><span class="album-artist">Outkast</span><span class="album-title">Aquemini (1998)</span><span class="album-why">Donde el hip-hop del sur se encontró con la experimentación y ganó.</span></div></div>
+        <div class="album-item"><span class="album-num">04</span><div><span class="album-artist">Jay-Z</span><span class="album-title">The Blueprint (2001)</span><span class="album-why">Samples de soul, líricas ambiciosas y producción de Kanye. El rap mainstream en su cima.</span></div></div>
+        <div class="album-item"><span class="album-num">05</span><div><span class="album-artist">Tyler, the Creator</span><span class="album-title">Igor (2019)</span><span class="album-why">Hip-hop disuelto en R&B y synth-pop. Un álbum de desamor narrado en tercera persona.</span></div></div>
+      </div>
+    </div>
+    <div class="mood-section">
+      <div class="gsec-label">🎼 Subgéneros</div>
+      <div class="genre-list">
+        <div class="genre-item"><span class="genre-item-name">Boom Bap</span><span class="genre-item-desc">El sonido clásico del hip-hop de los 90. Samples de soul cortados sobre kicks contundentes.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Trap</span><span class="genre-item-desc">Hi-hats rápidos, 808s profundos y letras de la calle. Dominó la década del 2010.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Conscious rap</span><span class="genre-item-desc">Líricas que cuestionan el sistema. De Public Enemy a J. Cole, la conciencia como arma.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Lo-fi hip hop</span><span class="genre-item-desc">Beats cálidos y granulados para estudiar o relajarse. El subgénero que YouTube globalizó.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Cloud rap</span><span class="genre-item-desc">Producción etérea, voces procesadas y atmósferas oníricas. Lil B y ASAP Rocky abrieron la puerta.</span></div>
+      </div>
+    </div>
+    <div class="mood-section">
+      <div class="gsec-label">🎤 Artistas clave</div>
+      <div class="artist-list">
+        <div class="artist-item"><div class="artist-avatar">KL</div><div><span class="artist-name">Kendrick Lamar</span><span class="artist-sub">Conscious rap · EE.UU.</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">NS</div><div><span class="artist-name">Nas</span><span class="artist-sub">Boom Bap · EE.UU.</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">OK</div><div><span class="artist-name">Outkast</span><span class="artist-sub">Southernplayalistic · EE.UU.</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">TC</div><div><span class="artist-name">Tyler, the Creator</span><span class="artist-sub">Experimental · EE.UU.</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">JC</div><div><span class="artist-name">J. Cole</span><span class="artist-sub">Conscious / Trap · EE.UU.</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">MF</div><div><span class="artist-name">MF DOOM</span><span class="artist-sub">Underground · EE.UU./UK</span></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ELECTRÓNICA -->
+<div class="mood-detail-overlay" id="genre-electronica">
+  <button class="back-btn" onclick="hideGenre()">← Volver a géneros</button>
+  <div class="mood-hero" style="background:linear-gradient(135deg,#00101a 0%,#0a0a0a 100%);">
+    <div class="mood-hero-bg">🎹</div>
+    <div>
+      <div class="mood-hero-label">🎹 Género</div>
+      <div class="mood-hero-name">Electrónica</div>
+      <p class="mood-hero-desc">Desde los laboratorios de Düsseldorf hasta los clubes de Detroit y Chicago, la música electrónica reinventó cómo se crea y se vive el sonido. Máquinas que suenan humanas, humanidad que baila sin parar.</p>
+      <div class="mood-traits"><span class="mood-trait trait-a">🔊 Síntesis sonora</span><span class="mood-trait trait-b">🕺 Cultura de club</span><span class="mood-trait trait-c">🌐 Global y sin fronteras</span></div>
+    </div>
+    <div class="mood-stats">
+      <div class="stat-box"><span class="stat-val">15</span><span class="stat-label">Subgéneros</span></div>
+      <div class="stat-box"><span class="stat-val">BPM ~128</span><span class="stat-label">Tempo promedio</span></div>
+      <div class="stat-box"><span class="stat-val">★ 4.6</span><span class="stat-label">Valoración</span></div>
+    </div>
+  </div>
+  <div class="mood-body">
+    <div class="mood-section">
+      <div class="gsec-label">💿 Álbumes esenciales</div>
+      <div class="album-list">
+        <div class="album-item"><span class="album-num">01</span><div><span class="album-artist">Kraftwerk</span><span class="album-title">Trans-Europe Express (1977)</span><span class="album-why">El big bang de la electrónica moderna. Robotik, pulsante y absolutamente visionario.</span></div></div>
+        <div class="album-item"><span class="album-num">02</span><div><span class="album-artist">Daft Punk</span><span class="album-title">Discovery (2001)</span><span class="album-why">House francés filtrado por el amor a los 70s. Todavía suena como el futuro.</span></div></div>
+        <div class="album-item"><span class="album-num">03</span><div><span class="album-artist">Aphex Twin</span><span class="album-title">Selected Ambient Works Vol. II (1994)</span><span class="album-why">Ambient que incomoda y fascina a partes iguales. Escucha en oscuridad total.</span></div></div>
+        <div class="album-item"><span class="album-num">04</span><div><span class="album-artist">The Chemical Brothers</span><span class="album-title">Dig Your Own Hole (1997)</span><span class="album-why">Big beat en estado puro. Riffs de guitarra y breakbeats fusionados con genialidad.</span></div></div>
+        <div class="album-item"><span class="album-num">05</span><div><span class="album-artist">Burial</span><span class="album-title">Untrue (2007)</span><span class="album-why">UK garage fragmentado en lluvia nocturna y soledad urbana. Único e irrepetible.</span></div></div>
+      </div>
+    </div>
+    <div class="mood-section">
+      <div class="gsec-label">🎼 Subgéneros</div>
+      <div class="genre-list">
+        <div class="genre-item"><span class="genre-item-name">House</span><span class="genre-item-desc">Chicago, 1985. Four-on-the-floor, samples de soul y la pista de baile como espacio sagrado.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Techno</span><span class="genre-item-desc">Detroit en estado puro: industrial, oscuro y repetitivo. La banda sonora de la postmodernidad.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Ambient</span><span class="genre-item-desc">Brian Eno definió el género: música que puede ignorarse y escucharse al mismo tiempo.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Drum & Bass</span><span class="genre-item-desc">Breakbeats a 170 BPM sobre bajos profundos. UK en modo adrenalina total.</span></div>
+        <div class="genre-item"><span class="genre-item-name">IDM</span><span class="genre-item-desc">Música electrónica inteligente, para escuchar, no para bailar. Aphex Twin es su profeta.</span></div>
+      </div>
+    </div>
+    <div class="mood-section">
+      <div class="gsec-label">🎤 Artistas clave</div>
+      <div class="artist-list">
+        <div class="artist-item"><div class="artist-avatar">KW</div><div><span class="artist-name">Kraftwerk</span><span class="artist-sub">Electrónica pionera · Alemania</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">DP</div><div><span class="artist-name">Daft Punk</span><span class="artist-sub">French House · Francia</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">AT</div><div><span class="artist-name">Aphex Twin</span><span class="artist-sub">IDM / Ambient · UK</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">BR</div><div><span class="artist-name">Burial</span><span class="artist-sub">UK Garage / Dubstep · UK</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">FG</div><div><span class="artist-name">Four Tet</span><span class="artist-sub">Folktronica · UK</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">BO</div><div><span class="artist-name">Bonobo</span><span class="artist-sub">Nu-jazz electrónico · UK</span></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- JAZZ -->
+<div class="mood-detail-overlay" id="genre-jazz">
+  <button class="back-btn" onclick="hideGenre()">← Volver a géneros</button>
+  <div class="mood-hero" style="background:linear-gradient(135deg,#1a1000 0%,#0a0a0a 100%);">
+    <div class="mood-hero-bg">🎷</div>
+    <div>
+      <div class="mood-hero-label">🎷 Género</div>
+      <div class="mood-hero-name">Jazz</div>
+      <p class="mood-hero-desc">El jazz nació en Nueva Orleans como síntesis de blues, ragtime y espirituals. Desde entonces no ha parado de mutar: bebop, cool jazz, free jazz, fusion. La improvisación es su alma — cada actuación es única e irrepetible.</p>
+      <div class="mood-traits"><span class="mood-trait trait-a">🎵 Improvisación</span><span class="mood-trait trait-b">🤝 Diálogo entre músicos</span><span class="mood-trait trait-c">🌍 Raíces afroamericanas</span></div>
+    </div>
+    <div class="mood-stats">
+      <div class="stat-box"><span class="stat-val">8</span><span class="stat-label">Subgéneros</span></div>
+      <div class="stat-box"><span class="stat-val">BPM ~120</span><span class="stat-label">Tempo promedio</span></div>
+      <div class="stat-box"><span class="stat-val">★ 4.9</span><span class="stat-label">Valoración</span></div>
+    </div>
+  </div>
+  <div class="mood-body">
+    <div class="mood-section">
+      <div class="gsec-label">💿 Álbumes esenciales</div>
+      <div class="album-list">
+        <div class="album-item"><span class="album-num">01</span><div><span class="album-artist">Miles Davis</span><span class="album-title">Kind of Blue (1959)</span><span class="album-why">El álbum de jazz más vendido de la historia. Modal jazz que reescribió las reglas del juego.</span></div></div>
+        <div class="album-item"><span class="album-num">02</span><div><span class="album-artist">John Coltrane</span><span class="album-title">A Love Supreme (1965)</span><span class="album-why">Una suite en cuatro partes dedicada a Dios. El jazz como experiencia espiritual.</span></div></div>
+        <div class="album-item"><span class="album-num">03</span><div><span class="album-artist">Dave Brubeck Quartet</span><span class="album-title">Time Out (1959)</span><span class="album-why">Compases irregulares que se sienten completamente naturales. El cool jazz en su forma más accesible.</span></div></div>
+        <div class="album-item"><span class="album-num">04</span><div><span class="album-artist">Bill Evans Trio</span><span class="album-title">Waltz for Debby (1962)</span><span class="album-why">Piano íntimo y conversacional. Grabado en vivo en el Village Vanguard con ruido de copas incluido.</span></div></div>
+        <div class="album-item"><span class="album-num">05</span><div><span class="album-artist">Kamasi Washington</span><span class="album-title">The Epic (2015)</span><span class="album-why">Jazz del siglo XXI: orquestral, ambicioso y conectado con el hip-hop y el soul contemporáneo.</span></div></div>
+      </div>
+    </div>
+    <div class="mood-section">
+      <div class="gsec-label">🎼 Subgéneros</div>
+      <div class="genre-list">
+        <div class="genre-item"><span class="genre-item-name">Bebop</span><span class="genre-item-desc">Velocidad, complejidad armónica y virtuosismo. Charlie Parker y Dizzy Gillespie redefinieron el jazz en los 40s.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Cool Jazz</span><span class="genre-item-desc">Más lento, intelectual y europeo que el bebop. Miles Davis lo codificó con Birth of the Cool.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Free Jazz</span><span class="genre-item-desc">Sin estructura armónica ni métricas fijas. Ornette Coleman rompió todas las reglas en 1960.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Fusion</span><span class="genre-item-desc">Jazz mezclado con rock y funk. Eléctrico, psicodélico y controvertido cuando llegó.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Nu-jazz</span><span class="genre-item-desc">Jazz contemporáneo que absorbe electrónica, hip-hop y world music. Esbjörn Svensson, Nils Petter Molvær.</span></div>
+      </div>
+    </div>
+    <div class="mood-section">
+      <div class="gsec-label">🎤 Artistas clave</div>
+      <div class="artist-list">
+        <div class="artist-item"><div class="artist-avatar">MD</div><div><span class="artist-name">Miles Davis</span><span class="artist-sub">Modal / Fusion · EE.UU.</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">JC</div><div><span class="artist-name">John Coltrane</span><span class="artist-sub">Hard Bop / Free Jazz · EE.UU.</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">BE</div><div><span class="artist-name">Bill Evans</span><span class="artist-sub">Cool Jazz · EE.UU.</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">KW</div><div><span class="artist-name">Kamasi Washington</span><span class="artist-sub">Jazz contemporáneo · EE.UU.</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">TM</div><div><span class="artist-name">Thelonious Monk</span><span class="artist-sub">Bebop · EE.UU.</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">HH</div><div><span class="artist-name">Herbie Hancock</span><span class="artist-sub">Fusion / Funk · EE.UU.</span></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- METAL -->
+<div class="mood-detail-overlay" id="genre-metal">
+  <button class="back-btn" onclick="hideGenre()">← Volver a géneros</button>
+  <div class="mood-hero" style="background:linear-gradient(135deg,#1a0000 0%,#0a0a0a 100%);">
+    <div class="mood-hero-bg">🤘</div>
+    <div>
+      <div class="mood-hero-label">🤘 Género</div>
+      <div class="mood-hero-name">Metal</div>
+      <p class="mood-hero-desc">Nacido del rock duro de finales de los 60, el metal es un universo propio con su estética, su filosofía y su comunidad. De los riffs de Black Sabbath al virtuosismo técnico del death metal, la intensidad es la constante.</p>
+      <div class="mood-traits"><span class="mood-trait trait-a">🎸 Guitarras distorsionadas</span><span class="mood-trait trait-b">💪 Intensidad extrema</span><span class="mood-trait trait-c">🌑 Estética oscura</span></div>
+    </div>
+    <div class="mood-stats">
+      <div class="stat-box"><span class="stat-val">11</span><span class="stat-label">Subgéneros</span></div>
+      <div class="stat-box"><span class="stat-val">BPM ~160</span><span class="stat-label">Tempo promedio</span></div>
+      <div class="stat-box"><span class="stat-val">★ 4.5</span><span class="stat-label">Valoración</span></div>
+    </div>
+  </div>
+  <div class="mood-body">
+    <div class="mood-section">
+      <div class="gsec-label">💿 Álbumes esenciales</div>
+      <div class="album-list">
+        <div class="album-item"><span class="album-num">01</span><div><span class="album-artist">Black Sabbath</span><span class="album-title">Paranoid (1970)</span><span class="album-why">El acta de nacimiento del metal. Oscuridad, riffs pesados y Tony Iommi inventando un género.</span></div></div>
+        <div class="album-item"><span class="album-num">02</span><div><span class="album-artist">Metallica</span><span class="album-title">Master of Puppets (1986)</span><span class="album-why">El thrash metal en su máxima expresión: velocidad, precisión y letras sobre adicción y control.</span></div></div>
+        <div class="album-item"><span class="album-num">03</span><div><span class="album-artist">Slayer</span><span class="album-title">Reign in Blood (1986)</span><span class="album-why">29 minutos sin respiro. La velocidad y agresión del thrash llevadas al límite absoluto.</span></div></div>
+        <div class="album-item"><span class="album-num">04</span><div><span class="album-artist">Tool</span><span class="album-title">Lateralus (2001)</span><span class="album-why">Metal progresivo con compases fibonacci y letras filosóficas. Cerebral y visceral al mismo tiempo.</span></div></div>
+        <div class="album-item"><span class="album-num">05</span><div><span class="album-artist">Mastodon</span><span class="album-title">Leviathan (2004)</span><span class="album-why">Concept album sobre Moby Dick. Sludge, prog y death metal fusionados con ambición narrativa.</span></div></div>
+      </div>
+    </div>
+    <div class="mood-section">
+      <div class="gsec-label">🎼 Subgéneros</div>
+      <div class="genre-list">
+        <div class="genre-item"><span class="genre-item-name">Thrash Metal</span><span class="genre-item-desc">Velocidad de punk, técnica de heavy metal. La Big Four: Metallica, Slayer, Megadeth, Anthrax.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Death Metal</span><span class="genre-item-desc">Voces guturales, blast beats y riffs de alta complejidad técnica. Florida fue su epicentro.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Black Metal</span><span class="genre-item-desc">Frío, oscuro y atmosférico. Noruega en los 90 definió su sonido y su estética más extrema.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Doom Metal</span><span class="genre-item-desc">Lento, pesado y opresivo. Black Sabbath es el origen; Electric Wizard su forma más extrema.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Progressive Metal</span><span class="genre-item-desc">Compases complejos, composiciones largas y ambición conceptual. Dream Theater y Tool lideran.</span></div>
+      </div>
+    </div>
+    <div class="mood-section">
+      <div class="gsec-label">🎤 Artistas clave</div>
+      <div class="artist-list">
+        <div class="artist-item"><div class="artist-avatar">BS</div><div><span class="artist-name">Black Sabbath</span><span class="artist-sub">Heavy Metal · UK</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">MT</div><div><span class="artist-name">Metallica</span><span class="artist-sub">Thrash Metal · EE.UU.</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">TL</div><div><span class="artist-name">Tool</span><span class="artist-sub">Prog Metal · EE.UU.</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">SL</div><div><span class="artist-name">Slayer</span><span class="artist-sub">Thrash Metal · EE.UU.</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">MS</div><div><span class="artist-name">Mastodon</span><span class="artist-sub">Sludge / Prog · EE.UU.</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">MB</div><div><span class="artist-name">Mayhem</span><span class="artist-sub">Black Metal · Noruega</span></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- R&B -->
+<div class="mood-detail-overlay" id="genre-rnb">
+  <button class="back-btn" onclick="hideGenre()">← Volver a géneros</button>
+  <div class="mood-hero" style="background:linear-gradient(135deg,#1a0015 0%,#0a0a0a 100%);">
+    <div class="mood-hero-bg">🎵</div>
+    <div>
+      <div class="mood-hero-label">🎵 Género</div>
+      <div class="mood-hero-name">R&B</div>
+      <p class="mood-hero-desc">Rhythm and Blues: el ritmo que mueve el cuerpo y el blues que conmueve el alma. Desde Ray Charles hasta Frank Ocean, el R&B ha evolucionado sin perder su núcleo emocional. Es el lenguaje musical del amor, la pérdida y la sensualidad.</p>
+      <div class="mood-traits"><span class="mood-trait trait-a">💫 Grooves hipnóticos</span><span class="mood-trait trait-b">🎤 Voces acrobáticas</span><span class="mood-trait trait-c">💜 Emotividad directa</span></div>
+    </div>
+    <div class="mood-stats">
+      <div class="stat-box"><span class="stat-val">7</span><span class="stat-label">Subgéneros</span></div>
+      <div class="stat-box"><span class="stat-val">BPM ~90</span><span class="stat-label">Tempo promedio</span></div>
+      <div class="stat-box"><span class="stat-val">★ 4.8</span><span class="stat-label">Valoración</span></div>
+    </div>
+  </div>
+  <div class="mood-body">
+    <div class="mood-section">
+      <div class="gsec-label">💿 Álbumes esenciales</div>
+      <div class="album-list">
+        <div class="album-item"><span class="album-num">01</span><div><span class="album-artist">Marvin Gaye</span><span class="album-title">What's Going On (1971)</span><span class="album-why">Soul y R&B al servicio de un mensaje social. El álbum que demostró que el género podía ser político.</span></div></div>
+        <div class="album-item"><span class="album-num">02</span><div><span class="album-artist">D'Angelo</span><span class="album-title">Voodoo (2000)</span><span class="album-why">Neo-soul y funk en su forma más sensual y sofisticada. Producción que respira.</span></div></div>
+        <div class="album-item"><span class="album-num">03</span><div><span class="album-artist">SZA</span><span class="album-title">Ctrl (2017)</span><span class="album-why">R&B alternativo con vulnerabilidad sin filtros. La voz de una generación.</span></div></div>
+        <div class="album-item"><span class="album-num">04</span><div><span class="album-artist">Beyoncé</span><span class="album-title">Lemonade (2016)</span><span class="album-why">R&B, rock, country y spoken word. Un álbum visual sobre traición, perdón y poder.</span></div></div>
+        <div class="album-item"><span class="album-num">05</span><div><span class="album-artist">Frank Ocean</span><span class="album-title">Channel Orange (2012)</span><span class="album-why">R&B que navega entre el soul, el funk y el pop. Storytelling emocional de primera clase.</span></div></div>
+      </div>
+    </div>
+    <div class="mood-section">
+      <div class="gsec-label">🎼 Subgéneros</div>
+      <div class="genre-list">
+        <div class="genre-item"><span class="genre-item-name">Soul clásico</span><span class="genre-item-desc">Motown, Stax, Atlantic. Aretha Franklin, Marvin Gaye, Otis Redding. La edad de oro del R&B.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Neo-soul</span><span class="genre-item-desc">Los 90s reviven el soul con producción moderna. D'Angelo, Erykah Badu, Lauryn Hill.</span></div>
+        <div class="genre-item"><span class="genre-item-name">R&B alternativo</span><span class="genre-item-desc">Frank Ocean, SZA, Solange. Sin las reglas del R&B mainstream, con toda su emoción.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Funk</span><span class="genre-item-desc">James Brown, George Clinton, Prince. El groove como filosofía de vida.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Quiet Storm</span><span class="genre-item-desc">R&B suave y sensual para la radio nocturna. Luther Vandross es su máximo exponente.</span></div>
+      </div>
+    </div>
+    <div class="mood-section">
+      <div class="gsec-label">🎤 Artistas clave</div>
+      <div class="artist-list">
+        <div class="artist-item"><div class="artist-avatar">MG</div><div><span class="artist-name">Marvin Gaye</span><span class="artist-sub">Soul / R&B · EE.UU.</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">DA</div><div><span class="artist-name">D'Angelo</span><span class="artist-sub">Neo-soul · EE.UU.</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">SZ</div><div><span class="artist-name">SZA</span><span class="artist-sub">R&B alternativo · EE.UU.</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">FO</div><div><span class="artist-name">Frank Ocean</span><span class="artist-sub">R&B alternativo · EE.UU.</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">EB</div><div><span class="artist-name">Erykah Badu</span><span class="artist-sub">Neo-soul · EE.UU.</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">BY</div><div><span class="artist-name">Beyoncé</span><span class="artist-sub">Pop / R&B · EE.UU.</span></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOLK -->
+<div class="mood-detail-overlay" id="genre-folk">
+  <button class="back-btn" onclick="hideGenre()">← Volver a géneros</button>
+  <div class="mood-hero" style="background:linear-gradient(135deg,#0a1500 0%,#0a0a0a 100%);">
+    <div class="mood-hero-bg">🌿</div>
+    <div>
+      <div class="mood-hero-label">🌿 Género</div>
+      <div class="mood-hero-name">Folk</div>
+      <p class="mood-hero-desc">Música de la tierra y de la gente. El folk lleva la tradición oral a través de generaciones, pero en manos de artistas modernos se convierte en algo completamente nuevo: íntimo, honesto y despojado de artificios.</p>
+      <div class="mood-traits"><span class="mood-trait trait-a">🪕 Acústico y artesanal</span><span class="mood-trait trait-b">📖 Narrativa y letras</span><span class="mood-trait trait-c">🌲 Conexión con lo simple</span></div>
+    </div>
+    <div class="mood-stats">
+      <div class="stat-box"><span class="stat-val">6</span><span class="stat-label">Subgéneros</span></div>
+      <div class="stat-box"><span class="stat-val">BPM ~80</span><span class="stat-label">Tempo promedio</span></div>
+      <div class="stat-box"><span class="stat-val">★ 4.6</span><span class="stat-label">Valoración</span></div>
+    </div>
+  </div>
+  <div class="mood-body">
+    <div class="mood-section">
+      <div class="gsec-label">💿 Álbumes esenciales</div>
+      <div class="album-list">
+        <div class="album-item"><span class="album-num">01</span><div><span class="album-artist">Bob Dylan</span><span class="album-title">Bringing It All Back Home (1965)</span><span class="album-why">Cuando Dylan enchufó la guitarra y cambió el folk para siempre. Todavía polémico, todavía perfecto.</span></div></div>
+        <div class="album-item"><span class="album-num">02</span><div><span class="album-artist">Joni Mitchell</span><span class="album-title">Blue (1971)</span><span class="album-why">El álbum más íntimo y vulnerable de la historia del folk. Confesional hasta el dolor.</span></div></div>
+        <div class="album-item"><span class="album-num">03</span><div><span class="album-artist">Bon Iver</span><span class="album-title">For Emma, Forever Ago (2008)</span><span class="album-why">Grabado en una cabaña de Wisconsin en invierno. El indie folk del siglo XXI en estado puro.</span></div></div>
+        <div class="album-item"><span class="album-num">04</span><div><span class="album-artist">Fleet Foxes</span><span class="album-title">Fleet Foxes (2008)</span><span class="album-why">Armonías vocales de otro mundo sobre guitarras acústicas pastorales. Inmediatamente clásico.</span></div></div>
+        <div class="album-item"><span class="album-num">05</span><div><span class="album-artist">Iron & Wine</span><span class="album-title">The Creek Drank the Cradle (2002)</span><span class="album-why">Folk susurrado, grabado en cassette en casa. Intimidad como forma de arte.</span></div></div>
+      </div>
+    </div>
+    <div class="mood-section">
+      <div class="gsec-label">🎼 Subgéneros</div>
+      <div class="genre-list">
+        <div class="genre-item"><span class="genre-item-name">Indie Folk</span><span class="genre-item-desc">Folk con sensibilidad indie. Bon Iver, Fleet Foxes, The Tallest Man on Earth. Lo acústico como opción estética.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Americana</span><span class="genre-item-desc">La mezcla de folk, country, blues y rock de raíces americanas. Wilco, Ryan Adams, Gillian Welch.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Singer-songwriter</span><span class="genre-item-desc">Un artista, una guitarra y una historia que contar. Elliott Smith, Nick Drake, Sufjan Stevens.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Celtic Folk</span><span class="genre-item-desc">Irlanda, Escocia, Gales. Flautas, arpas y violines al servicio de tradiciones milenarias.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Folk electrónico</span><span class="genre-item-desc">Cuando lo acústico abraza lo digital. Bon Iver en Bon Iver, James Blake, Sufjan Stevens tardío.</span></div>
+      </div>
+    </div>
+    <div class="mood-section">
+      <div class="gsec-label">🎤 Artistas clave</div>
+      <div class="artist-list">
+        <div class="artist-item"><div class="artist-avatar">BD</div><div><span class="artist-name">Bob Dylan</span><span class="artist-sub">Folk / Rock · EE.UU.</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">JM</div><div><span class="artist-name">Joni Mitchell</span><span class="artist-sub">Folk / Jazz · Canadá</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">BI</div><div><span class="artist-name">Bon Iver</span><span class="artist-sub">Indie Folk · EE.UU.</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">FF</div><div><span class="artist-name">Fleet Foxes</span><span class="artist-sub">Chamber Folk · EE.UU.</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">ND</div><div><span class="artist-name">Nick Drake</span><span class="artist-sub">Folk · UK</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">SS</div><div><span class="artist-name">Sufjan Stevens</span><span class="artist-sub">Indie Folk · EE.UU.</span></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CLÁSICA -->
+<div class="mood-detail-overlay" id="genre-clasica">
+  <button class="back-btn" onclick="hideGenre()">← Volver a géneros</button>
+  <div class="mood-hero" style="background:linear-gradient(135deg,#0a0a1a 0%,#0a0a0a 100%);">
+    <div class="mood-hero-bg">🎻</div>
+    <div>
+      <div class="mood-hero-label">🎻 Género</div>
+      <div class="mood-hero-name">Clásica</div>
+      <p class="mood-hero-desc">Más de cuatro siglos de tradición escrita, interpretada y reinventada. De Bach a Beethoven, de Mahler a Arvo Pärt — la música clásica es el lenguaje más complejo y profundo que la humanidad ha desarrollado para expresar lo inexpresable.</p>
+      <div class="mood-traits"><span class="mood-trait trait-a">🎼 Partitura y estructura</span><span class="mood-trait trait-b">🏛️ Tradición europea</span><span class="mood-trait trait-c">∞ Profundidad emocional</span></div>
+    </div>
+    <div class="mood-stats">
+      <div class="stat-box"><span class="stat-val">5</span><span class="stat-label">Subgéneros</span></div>
+      <div class="stat-box"><span class="stat-val">Variable</span><span class="stat-label">Tempo</span></div>
+      <div class="stat-box"><span class="stat-val">★ 4.9</span><span class="stat-label">Valoración</span></div>
+    </div>
+  </div>
+  <div class="mood-body">
+    <div class="mood-section">
+      <div class="gsec-label">💿 Obras esenciales</div>
+      <div class="album-list">
+        <div class="album-item"><span class="album-num">01</span><div><span class="album-artist">Bach</span><span class="album-title">Las Variaciones Goldberg (1741)</span><span class="album-why">Una aria y 30 variaciones de una complejidad sobrehumana. Glenn Gould las inmortalizó en 1955.</span></div></div>
+        <div class="album-item"><span class="album-num">02</span><div><span class="album-artist">Beethoven</span><span class="album-title">Sinfonía Nº 9 (1824)</span><span class="album-why">Compuesta cuando era completamente sordo. El "Himno a la Alegría" como declaración de fe en la humanidad.</span></div></div>
+        <div class="album-item"><span class="album-num">03</span><div><span class="album-artist">Debussy</span><span class="album-title">Preludes (1910-13)</span><span class="album-why">El impresionismo en estado puro. Imágenes sonoras que desafían cualquier descripción verbal.</span></div></div>
+        <div class="album-item"><span class="album-num">04</span><div><span class="album-artist">Arvo Pärt</span><span class="album-title">Tabula Rasa (1977)</span><span class="album-why">El minimalismo sacro del siglo XX. Silencio y nota, repetición y transformación.</span></div></div>
+        <div class="album-item"><span class="album-num">05</span><div><span class="album-artist">Stravinsky</span><span class="album-title">La Consagración de la Primavera (1913)</span><span class="album-why">El estreno causó un escándalo. Hoy es la pieza orquestal más influyente del siglo XX.</span></div></div>
+      </div>
+    </div>
+    <div class="mood-section">
+      <div class="gsec-label">🎼 Períodos y estilos</div>
+      <div class="genre-list">
+        <div class="genre-item"><span class="genre-item-name">Barroco (1600–1750)</span><span class="genre-item-desc">Bach, Handel, Vivaldi. Ornamentación, contrapunto y la búsqueda de la perfección formal.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Clásico (1750–1820)</span><span class="genre-item-desc">Haydn, Mozart, Beethoven temprano. Claridad, equilibrio y la sonata como forma dominante.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Romántico (1820–1900)</span><span class="genre-item-desc">Schubert, Chopin, Wagner. La emoción por encima de la forma. Las sinfonías como épica personal.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Moderno (1900–1970)</span><span class="genre-item-desc">Stravinsky, Bartók, Shostakovich. La ruptura con la tonalidad y la búsqueda de nuevos lenguajes.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Minimalismo contemporáneo</span><span class="genre-item-desc">Glass, Reich, Pärt. La repetición como meditación. El presente como única temporalidad.</span></div>
+      </div>
+    </div>
+    <div class="mood-section">
+      <div class="gsec-label">🎤 Compositores clave</div>
+      <div class="artist-list">
+        <div class="artist-item"><div class="artist-avatar">JS</div><div><span class="artist-name">J.S. Bach</span><span class="artist-sub">Barroco · Alemania</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">LB</div><div><span class="artist-name">Beethoven</span><span class="artist-sub">Clásico / Romántico · Alemania</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">CD</div><div><span class="artist-name">Debussy</span><span class="artist-sub">Impresionismo · Francia</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">AP</div><div><span class="artist-name">Arvo Pärt</span><span class="artist-sub">Minimalismo sacro · Estonia</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">PG</div><div><span class="artist-name">Philip Glass</span><span class="artist-sub">Minimalismo · EE.UU.</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">SR</div><div><span class="artist-name">Steve Reich</span><span class="artist-sub">Minimalismo · EE.UU.</span></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- POP -->
+<div class="mood-detail-overlay" id="genre-pop">
+  <button class="back-btn" onclick="hideGenre()">← Volver a géneros</button>
+  <div class="mood-hero" style="background:linear-gradient(135deg,#001a0d 0%,#0a0a0a 100%);">
+    <div class="mood-hero-bg">🎶</div>
+    <div>
+      <div class="mood-hero-label">🎶 Género</div>
+      <div class="mood-hero-name">Pop</div>
+      <p class="mood-hero-desc">Popular music: el arte de hacer accesible lo emocional. Desde los Beatles hasta Billie Eilish, el pop ha absorbido todo lo que toca y lo ha convertido en algo memorable, pegadizo y a veces profundamente hermoso.</p>
+      <div class="mood-traits"><span class="mood-trait trait-a">🎧 Ganchos irresistibles</span><span class="mood-trait trait-b">🌈 Accesibilidad total</span><span class="mood-trait trait-c">✨ Producción impecable</span></div>
+    </div>
+    <div class="mood-stats">
+      <div class="stat-box"><span class="stat-val">10</span><span class="stat-label">Subgéneros</span></div>
+      <div class="stat-box"><span class="stat-val">BPM ~115</span><span class="stat-label">Tempo promedio</span></div>
+      <div class="stat-box"><span class="stat-val">★ 4.4</span><span class="stat-label">Valoración</span></div>
+    </div>
+  </div>
+  <div class="mood-body">
+    <div class="mood-section">
+      <div class="gsec-label">💿 Álbumes esenciales</div>
+      <div class="album-list">
+        <div class="album-item"><span class="album-num">01</span><div><span class="album-artist">Michael Jackson</span><span class="album-title">Thriller (1982)</span><span class="album-why">El álbum más vendido de la historia. Pop, funk, rock y R&B en equilibrio perfecto.</span></div></div>
+        <div class="album-item"><span class="album-num">02</span><div><span class="album-artist">Madonna</span><span class="album-title">Like a Prayer (1989)</span><span class="album-why">El álbum donde Madonna dejó de ser un fenómeno de ventas para convertirse en artista.</span></div></div>
+        <div class="album-item"><span class="album-num">03</span><div><span class="album-artist">Robyn</span><span class="album-title">Body Talk (2010)</span><span class="album-why">Synth-pop europeo con corazón roto. Cada canción es un clásico instantáneo.</span></div></div>
+        <div class="album-item"><span class="album-num">04</span><div><span class="album-artist">Billie Eilish</span><span class="album-title">When We All Fall Asleep… (2019)</span><span class="album-why">Pop de bedroom producido en casa. La ansiedad adolescente como material de arte mayor.</span></div></div>
+        <div class="album-item"><span class="album-num">05</span><div><span class="album-artist">Charli XCX</span><span class="album-title">Brat (2024)</span><span class="album-why">Hyperpop y club music fusionados en el álbum más influyente y conversado del año.</span></div></div>
+      </div>
+    </div>
+    <div class="mood-section">
+      <div class="gsec-label">🎼 Subgéneros</div>
+      <div class="genre-list">
+        <div class="genre-item"><span class="genre-item-name">Synth-pop</span><span class="genre-item-desc">Los 80s en su forma más pura: sintetizadores, cajas de ritmos y melancolía disco. Depeche Mode, New Order.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Art Pop</span><span class="genre-item-desc">Pop con ambición artística. David Bowie, Kate Bush, Björk. Las ideas importan tanto como los estribillos.</span></div>
+        <div class="genre-item"><span class="genre-item-name">K-Pop</span><span class="genre-item-desc">La máquina de entretenimiento surcoreana: coreografía perfecta, producción impecable, fandoms globales.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Electropop</span><span class="genre-item-desc">Pop con producción electrónica al frente. Robyn, La Roux, Carly Rae Jepsen en su mejor versión.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Hyperpop</span><span class="genre-item-desc">Pop llevado al extremo: distorsión, velocidad y referencias digitales. 100 gecs, Charli XCX, PC Music.</span></div>
+      </div>
+    </div>
+    <div class="mood-section">
+      <div class="gsec-label">🎤 Artistas clave</div>
+      <div class="artist-list">
+        <div class="artist-item"><div class="artist-avatar">MJ</div><div><span class="artist-name">Michael Jackson</span><span class="artist-sub">Pop / Funk · EE.UU.</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">MD</div><div><span class="artist-name">Madonna</span><span class="artist-sub">Pop / Dance · EE.UU.</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">RB</div><div><span class="artist-name">Robyn</span><span class="artist-sub">Synth-pop · Suecia</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">BJ</div><div><span class="artist-name">Björk</span><span class="artist-sub">Art Pop · Islandia</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">BE</div><div><span class="artist-name">Billie Eilish</span><span class="artist-sub">Dark Pop · EE.UU.</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">CX</div><div><span class="artist-name">Charli XCX</span><span class="artist-sub">Hyperpop · UK</span></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- REGGAE -->
+<div class="mood-detail-overlay" id="genre-reggae">
+  <button class="back-btn" onclick="hideGenre()">← Volver a géneros</button>
+  <div class="mood-hero" style="background:linear-gradient(135deg,#001a05 0%,#0a0a0a 100%);">
+    <div class="mood-hero-bg">🌊</div>
+    <div>
+      <div class="mood-hero-label">🌊 Género</div>
+      <div class="mood-hero-name">Reggae</div>
+      <p class="mood-hero-desc">Jamaica, años 60. Del ska al rocksteady y finalmente al reggae: un género que convirtió el ritmo off-beat en filosofía de vida. Bob Marley lo llevó al mundo; el Rastafari le dio su alma. Resistencia y paz en igual medida.</p>
+      <div class="mood-traits"><span class="mood-trait trait-a">🌿 Off-beat y groove</span><span class="mood-trait trait-b">☮️ Mensaje de paz</span><span class="mood-trait trait-c">🇯🇲 Raíces jamaicanas</span></div>
+    </div>
+    <div class="mood-stats">
+      <div class="stat-box"><span class="stat-val">5</span><span class="stat-label">Subgéneros</span></div>
+      <div class="stat-box"><span class="stat-val">BPM ~80</span><span class="stat-label">Tempo promedio</span></div>
+      <div class="stat-box"><span class="stat-val">★ 4.5</span><span class="stat-label">Valoración</span></div>
+    </div>
+  </div>
+  <div class="mood-body">
+    <div class="mood-section">
+      <div class="gsec-label">💿 Álbumes esenciales</div>
+      <div class="album-list">
+        <div class="album-item"><span class="album-num">01</span><div><span class="album-artist">Bob Marley & The Wailers</span><span class="album-title">Exodus (1977)</span><span class="album-why">Nombrado álbum del siglo XX por la revista Time. Reggae espiritual en su cima absoluta.</span></div></div>
+        <div class="album-item"><span class="album-num">02</span><div><span class="album-artist">Lee "Scratch" Perry</span><span class="album-title">Roast Fish Collie Weed & Corn Bread (1978)</span><span class="album-why">El dub como forma de arte. Perry construyó el estudio más psicodélico de la historia.</span></div></div>
+        <div class="album-item"><span class="album-num">03</span><div><span class="album-artist">Toots and the Maytals</span><span class="album-title">Funky Kingston (1975)</span><span class="album-why">El álbum que acuñó el término reggae. Soul jamaicano sin filtros.</span></div></div>
+        <div class="album-item"><span class="album-num">04</span><div><span class="album-artist">Burning Spear</span><span class="album-title">Marcus Garvey (1975)</span><span class="album-why">Roots reggae con mensaje panafricanista. Espiritual y político en igual medida.</span></div></div>
+        <div class="album-item"><span class="album-num">05</span><div><span class="album-artist">Damian Marley</span><span class="album-title">Welcome to Jamrock (2005)</span><span class="album-why">Reggae del siglo XXI que absorbe el hip-hop sin perder sus raíces.</span></div></div>
+      </div>
+    </div>
+    <div class="mood-section">
+      <div class="gsec-label">🎼 Subgéneros</div>
+      <div class="genre-list">
+        <div class="genre-item"><span class="genre-item-name">Roots Reggae</span><span class="genre-item-desc">El reggae más espiritual y político. Rastafari como filosofía. Bob Marley, Burning Spear, Culture.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Dub</span><span class="genre-item-desc">Reggae deconstruido en el estudio. Reverb, delay y mezcla creativa como composición. King Tubby.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Dancehall</span><span class="genre-item-desc">Más rápido, más festivo, más urbano. Sean Paul, Beenie Man, Shaggy. El reggae en la pista.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Ska</span><span class="genre-item-desc">El precursor: off-beat acelerado y jazz jamaicano. Los 60s en Kingston antes del reggae.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Reggaeton</span><span class="genre-item-desc">El dembow caribeño absorbió el reggae y el hip-hop. Puerto Rico, Daddy Yankee, Bad Bunny.</span></div>
+      </div>
+    </div>
+    <div class="mood-section">
+      <div class="gsec-label">🎤 Artistas clave</div>
+      <div class="artist-list">
+        <div class="artist-item"><div class="artist-avatar">BM</div><div><span class="artist-name">Bob Marley</span><span class="artist-sub">Roots Reggae · Jamaica</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">LP</div><div><span class="artist-name">Lee Scratch Perry</span><span class="artist-sub">Dub · Jamaica</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">KT</div><div><span class="artist-name">King Tubby</span><span class="artist-sub">Dub · Jamaica</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">BS</div><div><span class="artist-name">Burning Spear</span><span class="artist-sub">Roots Reggae · Jamaica</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">DM</div><div><span class="artist-name">Damian Marley</span><span class="artist-sub">Reggae / Hip-hop · Jamaica</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">BB</div><div><span class="artist-name">Bad Bunny</span><span class="artist-sub">Reggaeton / Trap · Puerto Rico</span></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PUNK -->
+<div class="mood-detail-overlay" id="genre-punk">
+  <button class="back-btn" onclick="hideGenre()">← Volver a géneros</button>
+  <div class="mood-hero" style="background:linear-gradient(135deg,#1a0800 0%,#0a0a0a 100%);">
+    <div class="mood-hero-bg">⚡</div>
+    <div>
+      <div class="mood-hero-label">⚡ Género</div>
+      <div class="mood-hero-name">Punk</div>
+      <p class="mood-hero-desc">1976, Londres y Nueva York simultáneamente. El punk fue una bomba contra el rock establishment: canciones de dos minutos, tres acordes y rabia honesta. No es un género — es una actitud que sigue contaminando todo lo que toca.</p>
+      <div class="mood-traits"><span class="mood-trait trait-a">💢 Rabia y urgencia</span><span class="mood-trait trait-b">✊ DIY y actitud</span><span class="mood-trait trait-c">⚡ Velocidad brutal</span></div>
+    </div>
+    <div class="mood-stats">
+      <div class="stat-box"><span class="stat-val">7</span><span class="stat-label">Subgéneros</span></div>
+      <div class="stat-box"><span class="stat-val">BPM ~180</span><span class="stat-label">Tempo promedio</span></div>
+      <div class="stat-box"><span class="stat-val">★ 4.6</span><span class="stat-label">Valoración</span></div>
+    </div>
+  </div>
+  <div class="mood-body">
+    <div class="mood-section">
+      <div class="gsec-label">💿 Álbumes esenciales</div>
+      <div class="album-list">
+        <div class="album-item"><span class="album-num">01</span><div><span class="album-artist">Ramones</span><span class="album-title">Ramones (1976)</span><span class="album-why">14 canciones en 29 minutos. Antes del punk, este álbum ya era punk. El año cero.</span></div></div>
+        <div class="album-item"><span class="album-num">02</span><div><span class="album-artist">Sex Pistols</span><span class="album-title">Never Mind the Bollocks (1977)</span><span class="album-why">El álbum que escandalizó a una nación y cambió la música para siempre.</span></div></div>
+        <div class="album-item"><span class="album-num">03</span><div><span class="album-artist">The Clash</span><span class="album-title">London Calling (1979)</span><span class="album-why">Punk que absorbía reggae, rockabilly y jazz. El álbum más ambicioso del movimiento.</span></div></div>
+        <div class="album-item"><span class="album-num">04</span><div><span class="album-artist">Minor Threat</span><span class="album-title">Complete Discography (1989)</span><span class="album-why">El hardcore en estado embrionario. 26 minutos que definieron el straight edge y el DIY.</span></div></div>
+        <div class="album-item"><span class="album-num">05</span><div><span class="album-artist">Fugazi</span><span class="album-title">Repeater (1990)</span><span class="album-why">Post-punk intelectual con integridad absoluta. Ian MacKaye rechazaba los contratos discográficos.</span></div></div>
+      </div>
+    </div>
+    <div class="mood-section">
+      <div class="gsec-label">🎼 Subgéneros</div>
+      <div class="genre-list">
+        <div class="genre-item"><span class="genre-item-name">Punk clásico</span><span class="genre-item-desc">Ramones, Sex Pistols, The Clash. Tres acordes, rabia y nada que perder. El año cero fue 1976.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Hardcore</span><span class="genre-item-desc">Más rápido, más corto y más político. Black Flag, Minor Threat, Dead Kennedys. No hay concesiones.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Post-punk</span><span class="genre-item-desc">Punk que empezó a pensar. Joy Division, Wire, Gang of Four. Oscuro, intelectual e influye hasta hoy.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Pop-punk</span><span class="genre-item-desc">Melodías del pop con energía del punk. Green Day, Blink-182, The Offspring. Masivo y sin complejos.</span></div>
+        <div class="genre-item"><span class="genre-item-name">Emo</span><span class="genre-item-desc">Punk emocional y confesional. De Rites of Spring a My Chemical Romance. El corazón en la manga.</span></div>
+      </div>
+    </div>
+    <div class="mood-section">
+      <div class="gsec-label">🎤 Artistas clave</div>
+      <div class="artist-list">
+        <div class="artist-item"><div class="artist-avatar">RM</div><div><span class="artist-name">Ramones</span><span class="artist-sub">Punk · EE.UU.</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">TC</div><div><span class="artist-name">The Clash</span><span class="artist-sub">Punk / Reggae · UK</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">JD</div><div><span class="artist-name">Joy Division</span><span class="artist-sub">Post-punk · UK</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">BF</div><div><span class="artist-name">Black Flag</span><span class="artist-sub">Hardcore · EE.UU.</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">FZ</div><div><span class="artist-name">Fugazi</span><span class="artist-sub">Post-hardcore · EE.UU.</span></div></div>
+        <div class="artist-item"><div class="artist-avatar">GD</div><div><span class="artist-name">Green Day</span><span class="artist-sub">Pop-punk · EE.UU.</span></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
   // ── TAB SWITCHING ──
   function switchTab(tab, btn) {
@@ -1708,6 +2232,26 @@
     document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
     btn.classList.add('active');
     document.getElementById('tab-' + tab).classList.add('active');
+  }
+
+  // ── GENRE DETAIL OVERLAY ──
+  function showGenre(id) {
+    document.querySelectorAll('.mood-detail-overlay').forEach(d => d.classList.remove('active'));
+    const overlay = document.getElementById('genre-' + id);
+    if (overlay) {
+      overlay.classList.add('active');
+      overlay.scrollTop = 0;
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  function hideGenre() {
+    document.querySelectorAll('.mood-detail-overlay').forEach(d => d.classList.remove('active'));
+    document.body.style.overflow = '';
+    const exploreSection = document.getElementById('explore');
+    if (exploreSection) {
+      setTimeout(() => exploreSection.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+    }
   }
 
   // ── MOOD DETAIL OVERLAY ──
@@ -1734,7 +2278,7 @@
 
   // Close overlay on Escape key
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') hideMood();
+    if (e.key === 'Escape') { hideMood(); hideGenre(); }
   });
 
   // ── SCROLL FADE-UP ──
